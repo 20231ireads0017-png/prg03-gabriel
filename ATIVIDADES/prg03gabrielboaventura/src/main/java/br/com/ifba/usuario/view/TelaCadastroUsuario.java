@@ -139,30 +139,39 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         // Verifica se algum campo está vazio
         if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(
-            this,
-            "Preencha todos os campos.",
-            "Erro",
-            javax.swing.JOptionPane.ERROR_MESSAGE
+                this,
+                "Preencha todos os campos.",
+                "Erro",
+                javax.swing.JOptionPane.ERROR_MESSAGE
             );
 
         // Verifica se as senhas são diferentes
         } else if (!senha.equals(confirmarSenha)) {
             javax.swing.JOptionPane.showMessageDialog(
-            this,
-            "As senhas não coincidem.",
-            "Erro",
-            javax.swing.JOptionPane.ERROR_MESSAGE
+                this,
+                "As senhas não coincidem.",
+                "Erro",
+                javax.swing.JOptionPane.ERROR_MESSAGE
             );
 
-            // Cadastro realizado
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(
+        // Verifica se o e-mail contém alguma palavra proibida
+        } else if (br.com.ifba.usuario.validar.ValidadorUsuario.contemPalavraProibida(email)) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Login contém palavra não permitida.",
+                "Erro",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+
+        // Cadastro realizado
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
                 this,
                 "Cadastro realizado com sucesso!",
                 "Sucesso",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE
-                );
-            }
+            );
+        }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
