@@ -144,14 +144,23 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
-        
         // Captura os dados digitados pelo usuário
         String loginDigitado = txtLogin.getText();
         String senhaDigitada = new String(txtSenha.getPassword());
 
-        // Exibe os dados digitados
-        lblMensagem.setText("Login: " + loginDigitado + " | Senha: " + senhaDigitada);
+        // Cria o objeto Usuario
+        br.com.ifba.usuario.entity.Usuario usuario =
+            new br.com.ifba.usuario.entity.Usuario();
 
+        // Preenche o objeto com os dados da tela
+        usuario.email = loginDigitado;
+        usuario.senha = senhaDigitada;
+
+        // Exibe os dados armazenados no objeto
+        lblMensagem.setText(
+            "Login: " + usuario.email
+            + " | Senha: " + usuario.senha
+        );
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
