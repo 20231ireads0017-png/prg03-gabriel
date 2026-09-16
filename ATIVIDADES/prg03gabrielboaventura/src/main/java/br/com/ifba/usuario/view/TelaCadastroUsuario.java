@@ -164,22 +164,18 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             );
 
         } else {
-            // Cria o objeto Usuario
-            br.com.ifba.usuario.entity.Usuario usuario =
-                new br.com.ifba.usuario.entity.Usuario();
-
-            // Preenche o objeto com os dados da tela
-            usuario.nome = nome;
-            usuario.email = email;
-            usuario.senha = senha;
+        
+        // Cria o objeto Usuario com os dados da tela
+        br.com.ifba.usuario.entity.Usuario usuario =
+            new br.com.ifba.usuario.entity.Usuario(nome, email, senha);
 
             // Exibe os dados armazenados no objeto
             javax.swing.JOptionPane.showMessageDialog(
                 this,
                 "Cadastro realizado com sucesso!\n\n"
-                + "Nome: " + usuario.nome
-                + "\nE-mail: " + usuario.email
-                + "\nSenha: " + usuario.senha,
+                + "Nome: " + usuario.getNome()
+                + "\nE-mail: " + usuario.getEmail()
+                + "\nSenha: " + usuario.getSenha(),
                 "Sucesso",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE
             );
