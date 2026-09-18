@@ -4,11 +4,13 @@
  */
 package br.com.ifba.usuario.entity;
 
+import br.com.ifba.usuario.interfaces.Autenticavel;
+
 /**
  *
  * @author gabri
  */
-public class Usuario {
+public class Usuario implements Autenticavel {
     
     // Dados do usuário
     private String nome;
@@ -52,4 +54,11 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    // Verifica se o e-mail e a senha estão corretos
+    @Override
+    public boolean autenticar(String email, String senha) {
+        return this.email.equals(email) && this.senha.equals(senha);
+    }
+
 }
