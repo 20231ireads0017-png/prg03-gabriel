@@ -148,20 +148,34 @@ public class TelaLogin extends javax.swing.JFrame {
         // Captura os dados digitados pelo usuário
         String loginDigitado = txtLogin.getText();
         String senhaDigitada = new String(txtSenha.getPassword());
-
-        // Cria o objeto Usuario
+        
+        // Usuário cadastrado para teste da autenticação
         br.com.ifba.usuario.entity.Usuario usuario =
-            new br.com.ifba.usuario.entity.Usuario();
-
-        // Preenche o objeto com os dados da tela
-        usuario.setEmail(loginDigitado);
-        usuario.setSenha(senhaDigitada);
-
-        // Exibe os dados armazenados no objeto
-        lblMensagem.setText(
-            "Login: " + usuario.getEmail()
-            + " | Senha: " + usuario.getSenha()
-        );
+            new br.com.ifba.usuario.entity.Usuario(
+                "Gabriel",
+                "gabriel@email.com",
+                "12345678"
+            );
+        
+        // Verifica as credenciais informadas
+        boolean autenticado = usuario.autenticar(loginDigitado, senhaDigitada);
+        
+        // Exibe o resultado da autenticação
+        if (autenticado) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Acesso liberado.",
+                "Login",
+                javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Acesso negado.",
+                "Login",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
      
     }//GEN-LAST:event_btnEntrarActionPerformed
 
