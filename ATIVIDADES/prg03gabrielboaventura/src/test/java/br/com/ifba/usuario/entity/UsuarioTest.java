@@ -7,6 +7,7 @@ package br.com.ifba.usuario.entity;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import br.com.ifba.paciente.entity.Paciente;
 
 /**
  *
@@ -35,5 +36,29 @@ public class UsuarioTest {
                 usuario.autenticar("gabriel@email.com", "senhaErrada");
 
         assertFalse(resultado);
+    }
+    
+    // Verifica o relacionamento entre Usuario e Paciente
+    @Test
+    public void deveRelacionarPacienteAoUsuario() {
+
+        // Cria um novo usuário
+        Usuario usuario = new Usuario(
+            "Gabriel",
+            "gabriel@email.com",
+            "12345678"
+        );
+
+        // Cria um novo paciente
+        Paciente paciente = new Paciente(
+            "Gabriel",
+            "123456789"
+        );
+
+        // Relaciona o paciente ao usuário
+        usuario.setPaciente(paciente);
+
+        // Verifica se o paciente retornado é o mesmo que foi relacionado
+        assertEquals(paciente, usuario.getPaciente());
     }
 }

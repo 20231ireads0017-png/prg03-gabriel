@@ -5,6 +5,7 @@
 package br.com.ifba.usuario.entity;
 
 import br.com.ifba.usuario.interfaces.Autenticavel;
+import br.com.ifba.paciente.entity.Paciente;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Usuario implements Autenticavel {
     private String nome;
     private String email;
     private String senha;
+    private Paciente paciente;
     
     // Construtor vazio
     public Usuario() {
@@ -53,6 +55,16 @@ public class Usuario implements Autenticavel {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    // Retorna o paciente relacionado ao usuário
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    // Define o paciente relacionado ao usuário
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
     
     // Verifica se o e-mail e a senha estão corretos
