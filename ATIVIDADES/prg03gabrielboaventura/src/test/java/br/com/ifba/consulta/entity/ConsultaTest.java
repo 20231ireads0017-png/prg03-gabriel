@@ -44,4 +44,33 @@ public class ConsultaTest {
         // Verifica se o status foi alterado
         assertEquals(StatusConsulta.REALIZADA, consulta.getStatus());
     }
+    
+    // Verifica se Consulta herda o comportamento de Atendimento
+    @Test
+    public void deveHerdarDadosDoAtendimento() {
+
+        // Cria uma nova consulta
+        Consulta consulta = new Consulta(
+            "Cardiologia",
+            "25/09/2026"
+        );
+
+        // Usa métodos herdados da classe Atendimento
+        assertEquals("Cardiologia", consulta.getEspecialidade());
+        assertEquals("25/09/2026", consulta.getData());
+    }
+
+    // Verifica se Consulta sobrescreve o tipo do atendimento
+    @Test
+    public void deveRetornarTipoConsulta() {
+
+        // Cria uma nova consulta
+        Consulta consulta = new Consulta(
+            "Cardiologia",
+            "25/09/2026"
+        );
+
+        // Verifica o comportamento sobrescrito
+        assertEquals("Consulta", consulta.getTipoAtendimento());
+    }
 }

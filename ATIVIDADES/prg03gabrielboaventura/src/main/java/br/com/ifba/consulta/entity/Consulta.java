@@ -9,38 +9,17 @@ package br.com.ifba.consulta.entity;
  * @author gabri
  */
 
-public class Consulta {
+import br.com.ifba.atendimento.entity.Atendimento;
 
-    // Dados da consulta
-    private String especialidade;
-    private String data;
+public class Consulta extends Atendimento {
+
+    // Status da consulta
     private StatusConsulta status;
 
     // Cria uma consulta com o status inicial AGENDADA
     public Consulta(String especialidade, String data) {
-        this.especialidade = especialidade;
-        this.data = data;
+        super(especialidade, data);
         this.status = StatusConsulta.AGENDADA;
-    }
-
-    // Retorna a especialidade da consulta
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    // Altera a especialidade da consulta
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
-
-    // Retorna a data da consulta
-    public String getData() {
-        return data;
-    }
-
-    // Altera a data da consulta
-    public void setData(String data) {
-        this.data = data;
     }
 
     // Retorna o status atual da consulta
@@ -51,5 +30,11 @@ public class Consulta {
     // Altera o status da consulta
     public void setStatus(StatusConsulta status) {
         this.status = status;
+    }
+
+    // Retorna o tipo específico do atendimento
+    @Override
+    public String getTipoAtendimento() {
+        return "Consulta";
     }
 }
