@@ -9,7 +9,7 @@ package br.com.ifba.atendimento.entity;
  * @author gabri
  */
 
-public class Atendimento {
+public abstract class Atendimento {
 
     // Dados comuns aos atendimentos
     private String especialidade;
@@ -41,8 +41,6 @@ public class Atendimento {
         this.data = data;
     }
 
-    // Retorna o tipo do atendimento
-    public String getTipoAtendimento() {
-        return "Atendimento";
-    }
+    // Retorna o tipo específico do atendimento
+    public abstract String getTipoAtendimento();
 }
