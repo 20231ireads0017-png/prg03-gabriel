@@ -11,6 +11,7 @@ package br.com.ifba.consulta.entity;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import br.com.ifba.atendimento.entity.Atendimento;
 
 public class ConsultaTest {
 
@@ -72,5 +73,19 @@ public class ConsultaTest {
 
         // Verifica o comportamento sobrescrito
         assertEquals("Consulta", consulta.getTipoAtendimento());
+    }
+    
+    // Verifica o comportamento polimórfico de Consulta
+    @Test
+    public void deveUsarConsultaComoAtendimento() {
+
+        // Cria uma Consulta usando o tipo geral Atendimento
+        Atendimento atendimento = new Consulta(
+            "Cardiologia",
+            "25/09/2026"
+        );
+
+        // Verifica qual implementação do método foi executada
+        assertEquals("Consulta", atendimento.getTipoAtendimento());
     }
 }
