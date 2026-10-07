@@ -6,6 +6,7 @@ package br.com.ifba.usuario.entity;
 
 import br.com.ifba.usuario.interfaces.Autenticavel;
 import br.com.ifba.paciente.entity.Paciente;
+import java.util.Objects;
 
 /**
  *
@@ -71,6 +72,27 @@ public class Usuario implements Autenticavel {
     @Override
     public boolean autenticar(String email, String senha) {
         return this.email.equals(email) && this.senha.equals(senha);
+    }
+    
+    // O e-mail identifica o usuário no sistema e funciona como seu login
+    @Override
+    public boolean equals(Object objeto) {
+        if (this == objeto) {
+            return true;
+        }
+
+        if (!(objeto instanceof Usuario)) {
+            return false;
+        }
+
+        Usuario usuario = (Usuario) objeto;
+        return Objects.equals(this.email, usuario.email);
+    }
+
+    // Gera o código de comparação usando o mesmo campo do equals
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 
 }

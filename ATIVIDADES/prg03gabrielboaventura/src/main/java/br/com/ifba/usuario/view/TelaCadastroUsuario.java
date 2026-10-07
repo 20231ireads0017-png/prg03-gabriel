@@ -12,6 +12,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
 
+    // Repositório que guarda os usuários cadastrados
+    private final br.com.ifba.usuario.repository.RepositorioUsuarioEmMemoria repositorio =
+        new br.com.ifba.usuario.repository.RepositorioUsuarioEmMemoria();
+    
     /**
      * Creates new form TelaCadastroUsuario
      */
@@ -183,6 +187,19 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                         // Cria o objeto Usuario com os dados da tela
                         br.com.ifba.usuario.entity.Usuario usuario =
                         new br.com.ifba.usuario.entity.Usuario(nome, email, senha);
+                        
+                        // Tenta cadastrar o usuário no repositório
+                        try {
+                            repositorio.cadastrar(usuario);
+                        } catch (IllegalArgumentException e) {
+                            javax.swing.JOptionPane.showMessageDialog(
+                                this,
+                                e.getMessage(),
+                                "Erro",
+                                javax.swing.JOptionPane.ERROR_MESSAGE
+                            );
+                            return;
+                        }
 
                         // Exibe os dados armazenados no objeto
                         javax.swing.JOptionPane.showMessageDialog(
