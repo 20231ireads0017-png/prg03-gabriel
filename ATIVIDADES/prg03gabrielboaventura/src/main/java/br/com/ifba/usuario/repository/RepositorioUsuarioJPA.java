@@ -2,12 +2,13 @@ package br.com.ifba.usuario.repository;
 
 import br.com.ifba.infra.jpa.JPAUtil;
 import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.exception.UsuarioNaoEncontradoException;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
 public class RepositorioUsuarioJPA {
 
-    // Salva um novo usuário no banco de dados
+    // Cadastra um novo usuário no banco de dados
     public void salvar(Usuario usuario) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -15,11 +16,13 @@ public class RepositorioUsuarioJPA {
             em.getTransaction().begin();
             em.persist(usuario);
             em.getTransaction().commit();
+
         } catch (RuntimeException e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
             throw e;
+
         } finally {
             em.close();
         }
@@ -27,14 +30,27 @@ public class RepositorioUsuarioJPA {
 
     // Busca um usuário pelo ID
     public Usuario buscarPorId(Long id) {
-        try (EntityManager em = JPAUtil.getEntityManager()) {
-            return em.find(Usuario.class, id);
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            Usuario usuario = em.find(Usuario.class, id);
+
+            if (usuario == null) {
+                throw new UsuarioNaoEncontradoException(id);
+            }
+
+            return usuario;
+
+        } finally {
+            em.close();
         }
     }
 
-    // Busca um usuário pelo e-mail
+    // Busca um usuário pelo e-mail utilizando JPQL
     public Usuario buscarPorEmail(String email) {
-        try (EntityManager em = JPAUtil.getEntityManager()) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
             return em.createQuery(
                     "SELECT u FROM Usuario u WHERE u.email = :email",
                     Usuario.class
@@ -43,16 +59,24 @@ public class RepositorioUsuarioJPA {
             .getResultStream()
             .findFirst()
             .orElse(null);
+
+        } finally {
+            em.close();
         }
     }
 
     // Lista todos os usuários cadastrados
     public List<Usuario> listarTodos() {
-        try (EntityManager em = JPAUtil.getEntityManager()) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
             return em.createQuery(
                     "SELECT u FROM Usuario u",
                     Usuario.class
             ).getResultList();
+
+        } finally {
+            em.close();
         }
     }
 
@@ -65,18 +89,69 @@ public class RepositorioUsuarioJPA {
 
             Usuario usuario = em.find(Usuario.class, id);
 
-            if (usuario != null) {
-                em.remove(usuario);
+            // Impede a exclusão de um usuário inexistente
+            if (usuario == null) {
+                throw new UsuarioNaoEncontradoException(id);
             }
 
+            em.remove(usuario);
             em.getTransaction().commit();
+
         } catch (RuntimeException e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
             throw e;
+
         } finally {
             em.close();
         }
+    }
+
+    // Atualiza um usuário existente no banco de dados
+    public void atualizar(Usuario usuario) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            // Verifica se o usuário existe antes de atualizar
+            Usuario existente = em.find(Usuario.class, usuario.getId());
+
+            if (existente == null) {
+                throw new UsuarioNaoEncontradoException(usuario.getId());
+            }
+
+            em.merge(usuario);
+            em.getTransaction().commit();
+
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+
+        } finally {
+            em.close();
+        }
+    }
+    
+    // Pesquisa usuários pelo nome ou e-mail utilizando JPQL
+    public List<Usuario> pesquisar(String texto) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                "SELECT u FROM Usuario u "
+                + "WHERE LOWER(u.nome) LIKE :texto "
+                + "OR LOWER(u.email) LIKE :texto",
+                Usuario.class
+            )
+            .setParameter("texto", "%" + texto.toLowerCase() + "%")
+            .getResultList();
+
+        } finally {
+            em.close();
+         }
     }
 }

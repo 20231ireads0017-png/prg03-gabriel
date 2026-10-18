@@ -8,6 +8,13 @@ package br.com.ifba.usuario.view;
  *
  * @author gabri
  */
+
+import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.repository.RepositorioUsuarioJPA;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class TelaCRUDUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCRUDUsuario.class.getName());
@@ -15,8 +22,41 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
     /**
      * Creates new form TelaCRUDUsuario
      */
+    
+    // Repositório responsável pelas operações no banco
+    private final RepositorioUsuarioJPA repositorio = new RepositorioUsuarioJPA();
+
+    // Carrega os usuários cadastrados na tabela
+    private void carregarUsuarios() {
+        try {
+            List<Usuario> usuarios = repositorio.listarTodos();
+
+            DefaultTableModel modelo =
+                (DefaultTableModel) tblUsuarios.getModel();
+
+            modelo.setRowCount(0);
+
+            for (Usuario usuario : usuarios) {
+                modelo.addRow(new Object[]{
+                    usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getEmail()
+                });
+            }
+
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Erro ao carregar usuários: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+         }
+    }
+    
     public TelaCRUDUsuario() {
         initComponents();
+        carregarUsuarios();
     }
 
     /**
@@ -36,8 +76,8 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,6 +86,11 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
         lblPesquisar.setText("Pesquisar:");
 
         btnPesquisar.setText("Ir");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -58,10 +103,25 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblUsuarios);
 
         btnAdicionar.setText("ADD");
-
-        btnEditar.setText("Editar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -83,9 +143,9 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAdicionar)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                        .addComponent(btnEditar)
+                        .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir)))
+                        .addComponent(btnEditar)))
                 .addContainerGap())
         );
         pnlPrincipalLayout.setVerticalGroup(
@@ -99,8 +159,8 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
                     .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisar)
                     .addComponent(btnAdicionar)
-                    .addComponent(btnEditar)
-                    .addComponent(btnExcluir))
+                    .addComponent(btnExcluir)
+                    .addComponent(btnEditar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -119,6 +179,201 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+        // Obtém o texto digitado na pesquisa
+        String texto = txtPesquisar.getText().trim();
+
+        try {
+            // Pesquisa no banco ou lista todos se o campo estiver vazio
+            List<Usuario> usuarios = texto.isEmpty()
+                ? repositorio.listarTodos()
+                : repositorio.pesquisar(texto);
+
+            DefaultTableModel modelo =
+            (DefaultTableModel) tblUsuarios.getModel();
+
+            modelo.setRowCount(0);
+
+            // Atualiza a tabela com os resultados
+            for (Usuario usuario : usuarios) {
+                modelo.addRow(new Object[]{
+                    usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getEmail()
+                });
+            }
+
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Erro ao pesquisar usuários: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+         }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+        // Solicita os dados do novo usuário
+        String nome = JOptionPane.showInputDialog(this, "Nome:");
+        if (nome == null) return;
+
+        String email = JOptionPane.showInputDialog(this, "E-mail:");
+        if (email == null) return;
+
+        String senha = JOptionPane.showInputDialog(this, "Senha:");
+        if (senha == null) return;
+
+        // Verifica se os campos foram preenchidos
+        if (nome.isBlank() || email.isBlank() || senha.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
+            return;
+        }
+
+        try {
+            // Cadastra o usuário no MySQL
+            Usuario usuario = new Usuario(nome.trim(), email.trim(), senha);
+            repositorio.salvar(usuario);
+
+            JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
+
+            // Atualiza a tabela após o cadastro
+            txtPesquisar.setText("");
+            carregarUsuarios();
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Erro ao cadastrar usuário: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+         }
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+        // Verifica se algum usuário foi selecionado
+        int linha = tblUsuarios.getSelectedRow();
+
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um usuário para excluir.");
+            return;
+        }
+
+        // Obtém o ID do usuário selecionado
+        int linhaModelo = tblUsuarios.convertRowIndexToModel(linha);
+        Long id = ((Number) tblUsuarios.getModel()
+        .getValueAt(linhaModelo, 0)).longValue();
+
+        // Solicita confirmação antes de excluir
+        int confirmacao = JOptionPane.showConfirmDialog(
+            this,
+            "Deseja realmente excluir o usuário de ID " + id + "?",
+            "Confirmar exclusão",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacao != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            // Exclui o usuário no banco de dados
+            repositorio.excluir(id);
+
+            JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
+
+            // Atualiza a tabela
+            txtPesquisar.setText("");
+            carregarUsuarios();
+        } catch (br.com.ifba.usuario.exception.UsuarioNaoEncontradoException e) {
+            // Exibe a mensagem da exceção personalizada
+            JOptionPane.showMessageDialog(
+                this,
+                e.getMessage(),
+                "Usuário não encontrado",
+                JOptionPane.WARNING_MESSAGE
+            );
+            carregarUsuarios();
+         } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Erro ao excluir usuário: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+         }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        // Verifica se um usuário foi selecionado
+        int linha = tblUsuarios.getSelectedRow();
+
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um usuário para editar.");
+            return;
+        }
+
+        // Obtém o ID do usuário selecionado
+        int linhaModelo = tblUsuarios.convertRowIndexToModel(linha);
+        Long id = ((Number) tblUsuarios.getModel()
+        .getValueAt(linhaModelo, 0)).longValue();
+
+        try {
+            // Busca os dados atuais do usuário no banco
+            Usuario usuario = repositorio.buscarPorId(id);
+
+            String nome = JOptionPane.showInputDialog(
+                this, "Novo nome:", usuario.getNome());
+
+            if (nome == null) return;
+
+            String email = JOptionPane.showInputDialog(
+                this, "Novo e-mail:", usuario.getEmail());
+
+            if (email == null) return;
+
+            // Valida os campos antes de atualizar
+            if (nome.isBlank() || email.isBlank()) {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
+                return;
+            }
+
+            // Atualiza os dados e salva no MySQL
+            usuario.setNome(nome.trim());
+            usuario.setEmail(email.trim());
+
+            repositorio.atualizar(usuario);
+
+            JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!");
+
+            txtPesquisar.setText("");
+            carregarUsuarios();
+
+        } catch (br.com.ifba.usuario.exception.UsuarioNaoEncontradoException e) {
+            // Trata o caso de usuário inexistente
+            JOptionPane.showMessageDialog(
+                this,
+                e.getMessage(),
+                "Usuário não encontrado",
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            carregarUsuarios();
+
+         } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Erro ao atualizar usuário: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+         }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
