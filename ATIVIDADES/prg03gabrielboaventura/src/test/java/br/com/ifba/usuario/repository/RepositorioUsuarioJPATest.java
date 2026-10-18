@@ -10,6 +10,7 @@ package br.com.ifba.usuario.repository;
  */
 
 import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.exception.UsuarioNaoEncontradoException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +20,7 @@ public class RepositorioUsuarioJPATest {
     public void deveSalvarBuscarEExcluirUsuario() {
         RepositorioUsuarioJPA repositorio = new RepositorioUsuarioJPA();
 
-        // Cria um usuário apenas para o teste
+        // Cria um usuário exclusivo para o teste
         String email = "teste.jpa." + System.nanoTime() + "@exemplo.com";
         Usuario usuario = new Usuario(
                 "Usuario Teste",
@@ -30,26 +31,25 @@ public class RepositorioUsuarioJPATest {
         Long id = null;
 
         try {
-            // Salva o usuário no MySQL
-            repositorio.salvar(usuario);
-
+            // Cadastra e verifica se o ID foi gerado
+            assertDoesNotThrow(() -> repositorio.salvar(usuario));
             assertNotNull(usuario.getId());
             id = usuario.getId();
 
-            // Busca pelo ID
+            // Verifica a busca por ID
             Usuario encontrado = repositorio.buscarPorId(id);
 
             assertNotNull(encontrado);
             assertEquals("Usuario Teste", encontrado.getNome());
             assertEquals(email, encontrado.getEmail());
 
-            // Busca pelo e-mail
+            // Verifica a busca por e-mail
             Usuario encontradoPorEmail = repositorio.buscarPorEmail(email);
 
             assertNotNull(encontradoPorEmail);
             assertEquals(id, encontradoPorEmail.getId());
 
-            // Verifica se aparece na listagem
+            // Verifica se o usuário aparece na listagem
             assertTrue(
                     repositorio.listarTodos().stream()
                             .anyMatch(u -> idIgual(u.getId(), usuario.getId()))
@@ -58,19 +58,24 @@ public class RepositorioUsuarioJPATest {
             System.out.println("Cadastro e consultas JPA realizados com sucesso!");
 
         } finally {
-            // Remove o usuário de teste, mesmo se alguma verificação falhar
+            // Exclui o usuário de teste mesmo se alguma verificação falhar
             if (id != null) {
                 repositorio.excluir(id);
             }
         }
 
-        // Confirma que o usuário foi excluído
-        assertNull(repositorio.buscarPorId(id));
-        System.out.println("Exclusão JPA realizada com sucesso!");
+        // Verifica se a busca de um usuário excluído lança a exceção esperada
+        Long idExcluido = id;
+
+        assertThrows(
+                UsuarioNaoEncontradoException.class,
+                () -> repositorio.buscarPorId(idExcluido)
+        );
+
+        System.out.println("Exclusão e tratamento de exceção realizados com sucesso!");
     }
 
     private boolean idIgual(Long primeiro, Long segundo) {
         return java.util.Objects.equals(primeiro, segundo);
     }
 }
-
