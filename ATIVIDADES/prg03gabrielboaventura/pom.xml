@@ -38,6 +38,20 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
         </dependency>
+
+        <!-- Flyway: versionamento do banco de dados -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>10.18.0</version>
+        </dependency>
+
+        <!-- Suporte do Flyway ao MySQL -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+            <version>10.18.0</version>
+        </dependency>
     </dependencies>
 
 </project>
