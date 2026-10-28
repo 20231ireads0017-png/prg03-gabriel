@@ -12,10 +12,14 @@ package com.mycompany.prg03gabrielboaventura;
 import br.com.ifba.atendimento.entity.ProcessadorAtendimento;
 import br.com.ifba.consulta.entity.Consulta;
 import br.com.ifba.exame.entity.Exame;
+import br.com.ifba.infra.jpa.FlywayUtil;
 
 public class Prg03gabrielboaventura {
 
     public static void main(String[] args) {
+
+        // Atualiza o banco antes de iniciar a aplicação
+        FlywayUtil.migrar();
 
         // Cria o processador de atendimentos
         ProcessadorAtendimento processador = new ProcessadorAtendimento();

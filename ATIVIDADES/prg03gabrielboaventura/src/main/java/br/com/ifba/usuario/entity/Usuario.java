@@ -40,6 +40,10 @@ public class Usuario implements Autenticavel {
 
     @Column(nullable = false)
     private String senha;
+    
+    // Telefone opcional do usuário
+    @Column(length = 20)
+    private String telefone;
 
     // Relacionamento ainda não persistido no banco
     @Transient
@@ -90,6 +94,15 @@ public class Usuario implements Autenticavel {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    // Métodos de acesso do telefone
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     // Retorna o paciente relacionado ao usuário
