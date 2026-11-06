@@ -10,10 +10,11 @@ package br.com.ifba.usuario.view;
  */
 
 import br.com.ifba.usuario.entity.Usuario;
-import br.com.ifba.usuario.repository.RepositorioUsuarioJPA;
+import br.com.ifba.usuario.dao.UsuarioDao;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import br.com.ifba.usuario.exception.UsuarioNaoEncontradoException;
 
 public class TelaCRUDUsuario extends javax.swing.JFrame {
     
@@ -24,12 +25,13 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
      */
     
     // Repositório responsável pelas operações no banco
-    private final RepositorioUsuarioJPA repositorio = new RepositorioUsuarioJPA();
+    // DAO responsável pelas operações no banco
+    private final UsuarioDao dao = new UsuarioDao();
 
     // Carrega os usuários cadastrados na tabela
     private void carregarUsuarios() {
         try {
-            List<Usuario> usuarios = repositorio.listarTodos();
+            List<Usuario> usuarios = dao.findAll();
 
             DefaultTableModel modelo =
                 (DefaultTableModel) tblUsuarios.getModel();
@@ -188,8 +190,8 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
         try {
             // Pesquisa no banco ou lista todos se o campo estiver vazio
             List<Usuario> usuarios = texto.isEmpty()
-                ? repositorio.listarTodos()
-                : repositorio.pesquisar(texto);
+            ? dao.findAll()
+            : dao.pesquisar(texto);
 
             DefaultTableModel modelo =
             (DefaultTableModel) tblUsuarios.getModel();
@@ -236,7 +238,7 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
         try {
             // Cadastra o usuário no MySQL
             Usuario usuario = new Usuario(nome.trim(), email.trim(), senha);
-            repositorio.salvar(usuario);
+            dao.save(usuario);
 
             JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
 
@@ -282,7 +284,15 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
 
         try {
             // Exclui o usuário no banco de dados
-            repositorio.excluir(id);
+            // Busca o usuário antes de excluir
+            Usuario usuario = dao.findById(id);
+
+            if (usuario == null) {
+                throw new UsuarioNaoEncontradoException(id);
+            }
+
+            // Exclui o usuário pelo DAO
+            dao.delete(usuario);;
 
             JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
 
@@ -325,7 +335,11 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
 
         try {
             // Busca os dados atuais do usuário no banco
-            Usuario usuario = repositorio.buscarPorId(id);
+            Usuario usuario = dao.findById(id);
+
+            if (usuario == null) {
+                throw new UsuarioNaoEncontradoException(id);
+            }
 
             String nome = JOptionPane.showInputDialog(
                 this, "Novo nome:", usuario.getNome());
@@ -347,7 +361,7 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
             usuario.setNome(nome.trim());
             usuario.setEmail(email.trim());
 
-            repositorio.atualizar(usuario);
+            dao.update(usuario);
 
             JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!");
 

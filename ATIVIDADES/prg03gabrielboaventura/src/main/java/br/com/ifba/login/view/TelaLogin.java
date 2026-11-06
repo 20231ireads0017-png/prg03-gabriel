@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.login.view;
+import br.com.ifba.usuario.dao.UsuarioDao;
+import br.com.ifba.usuario.entity.Usuario;
 
 /**
  *
@@ -11,7 +13,7 @@ package br.com.ifba.login.view;
 public class TelaLogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLogin.class.getName());
-
+    private final UsuarioDao dao = new UsuarioDao();
     /**
      * Creates new form TelaLogin
      */
@@ -149,16 +151,28 @@ public class TelaLogin extends javax.swing.JFrame {
         String loginDigitado = txtLogin.getText();
         String senhaDigitada = new String(txtSenha.getPassword());
         
-        // Usuário cadastrado para teste da autenticação
-        br.com.ifba.usuario.entity.Usuario usuario =
-            new br.com.ifba.usuario.entity.Usuario(
-                "Gabriel",
-                "gabriel@email.com",
-                "12345678"
+        // Busca o usuário cadastrado no banco de dados
+        boolean autenticado = false;
+
+        try {
+            Usuario usuario = dao.findByEmail(loginDigitado.trim());
+
+            if (usuario != null) {
+                autenticado = usuario.autenticar(
+                    loginDigitado.trim(),
+                    senhaDigitada
+                );
+            }
+
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Erro ao consultar usuário: " + e.getMessage(),
+                "Erro",
+                javax.swing.JOptionPane.ERROR_MESSAGE
             );
-        
-        // Verifica as credenciais informadas
-        boolean autenticado = usuario.autenticar(loginDigitado, senhaDigitada);
+            return;
+         }
         
         // Exibe o resultado da autenticação
         if (autenticado) {
