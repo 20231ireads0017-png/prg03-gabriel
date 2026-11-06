@@ -4,6 +4,8 @@
  */
 package br.com.ifba.usuario.view;
 
+import br.com.ifba.usuario.dao.UsuarioDao;
+
 /**
  *
  * @author gabri
@@ -12,9 +14,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
 
-    // Repositório que guarda os usuários cadastrados
-    private final br.com.ifba.usuario.repository.RepositorioUsuarioEmMemoria repositorio =
-        new br.com.ifba.usuario.repository.RepositorioUsuarioEmMemoria();
+    // DAO responsável por cadastrar usuários no banco de dados
+    private final UsuarioDao dao = new UsuarioDao();
     
     /**
      * Creates new form TelaCadastroUsuario
@@ -190,8 +191,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                         
                         // Tenta cadastrar o usuário no repositório
                         try {
-                            repositorio.cadastrar(usuario);
-                        } catch (IllegalArgumentException e) {
+                            dao.save(usuario);
+                        } catch (RuntimeException e) {
                             javax.swing.JOptionPane.showMessageDialog(
                                 this,
                                 e.getMessage(),

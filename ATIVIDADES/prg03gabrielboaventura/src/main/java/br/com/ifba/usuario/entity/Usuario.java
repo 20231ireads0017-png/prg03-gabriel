@@ -3,15 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+
 package br.com.ifba.usuario.entity;
 
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.usuario.interfaces.Autenticavel;
 import br.com.ifba.paciente.entity.Paciente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.util.Objects;
@@ -23,13 +22,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "usuarios")
-
-public class Usuario implements Autenticavel {
-
-    // Identificador único do usuário no banco de dados
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Usuario extends PersistenceEntity implements Autenticavel {
 
     // Dados do usuário
     @Column(nullable = false)
@@ -40,7 +33,7 @@ public class Usuario implements Autenticavel {
 
     @Column(nullable = false)
     private String senha;
-    
+
     // Telefone opcional do usuário
     @Column(length = 20)
     private String telefone;
@@ -58,15 +51,6 @@ public class Usuario implements Autenticavel {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-    }
-
-    // Métodos de acesso do ID
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     // Métodos de acesso do nome
@@ -95,7 +79,7 @@ public class Usuario implements Autenticavel {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
     // Métodos de acesso do telefone
     public String getTelefone() {
         return telefone;
