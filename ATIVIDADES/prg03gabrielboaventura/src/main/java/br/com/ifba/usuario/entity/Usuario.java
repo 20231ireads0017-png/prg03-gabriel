@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-
 package br.com.ifba.usuario.entity;
 
 import br.com.ifba.infrastructure.entity.PersistenceEntity;

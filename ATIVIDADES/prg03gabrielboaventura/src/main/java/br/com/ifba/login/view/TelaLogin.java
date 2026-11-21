@@ -3,21 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.login.view;
-import br.com.ifba.usuario.dao.UsuarioDao;
+
+import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
 
 /**
  *
  * @author gabri
  */
+
 public class TelaLogin extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLogin.class.getName());
-    private final UsuarioDao dao = new UsuarioDao();
+    private final UsuarioIController controller;
+
     /**
      * Creates new form TelaLogin
      */
-    public TelaLogin() {
+    public TelaLogin(UsuarioIController controller) {
+        this.controller = java.util.Objects.requireNonNull(controller);
         initComponents();
     }
 
@@ -146,51 +150,39 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
-        
-        // Captura os dados digitados pelo usuário
+
         String loginDigitado = txtLogin.getText();
         String senhaDigitada = new String(txtSenha.getPassword());
-        
-        // Busca o usuário cadastrado no banco de dados
-        boolean autenticado = false;
 
         try {
-            Usuario usuario = dao.findByEmail(loginDigitado.trim());
+            // A autenticação é realizada pelo Service via Controller.
+            boolean autenticado = controller.autenticar(
+                    loginDigitado, senhaDigitada);
 
-            if (usuario != null) {
-                autenticado = usuario.autenticar(
-                    loginDigitado.trim(),
-                    senhaDigitada
+            if (autenticado) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Acesso liberado.",
+                        "Login",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE
+                );
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Acesso negado.",
+                        "Login",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
                 );
             }
 
         } catch (RuntimeException e) {
             javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "Erro ao consultar usuário: " + e.getMessage(),
-                "Erro",
-                javax.swing.JOptionPane.ERROR_MESSAGE
-            );
-            return;
-         }
-        
-        // Exibe o resultado da autenticação
-        if (autenticado) {
-            javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "Acesso liberado.",
-                "Login",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE
-            );
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "Acesso negado.",
-                "Login",
-                javax.swing.JOptionPane.ERROR_MESSAGE
+                    this,
+                    "Erro ao autenticar usuário: " + e.getMessage(),
+                    "Erro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
             );
         }
-     
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
@@ -199,38 +191,23 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void lblCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastrarMouseClicked
         // TODO add your handling code here:
-        // Cria uma nova tela de cadastro de usuário
-         br.com.ifba.usuario.view.TelaCadastroUsuario telaCadastro
-            = new br.com.ifba.usuario.view.TelaCadastroUsuario();
 
-        // Exibe a tela de cadastro
+        // Abre o cadastro utilizando o mesmo Controller.
+        br.com.ifba.usuario.view.TelaCadastroUsuario telaCadastro
+                = new br.com.ifba.usuario.view.TelaCadastroUsuario(controller);
+
         telaCadastro.setVisible(true);
+
     }//GEN-LAST:event_lblCadastrarMouseClicked
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    public static void main(String[] args) {
+    // A classe Main monta as dependências da aplicação.
+    com.mycompany.prg03gabrielboaventura.Main.main(args);
+}
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaLogin().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;

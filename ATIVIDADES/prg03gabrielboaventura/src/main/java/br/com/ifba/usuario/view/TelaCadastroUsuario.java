@@ -4,23 +4,24 @@
  */
 package br.com.ifba.usuario.view;
 
-import br.com.ifba.usuario.dao.UsuarioDao;
+import br.com.ifba.usuario.controller.UsuarioIController;
 
 /**
  *
  * @author gabri
  */
 public class TelaCadastroUsuario extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
 
-    // DAO responsável por cadastrar usuários no banco de dados
-    private final UsuarioDao dao = new UsuarioDao();
-    
+    // A tela recebe o Controller sem conhecer o DAO.
+    private final UsuarioIController controller;
+
     /**
      * Creates new form TelaCadastroUsuario
      */
-    public TelaCadastroUsuario() {
+    public TelaCadastroUsuario(UsuarioIController controller) {
+        this.controller = java.util.Objects.requireNonNull(controller);
         initComponents();
     }
 
@@ -134,85 +135,51 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        
-    // Captura os dados informados pelo usuário
-    String nome = txtNome.getText();
-    String email = txtEmail.getText();
-    String senha = new String(txtSenha.getPassword());
-    String confirmarSenha = new String(txtConSenha.getPassword());
 
-    // Verifica se todos os campos foram preenchidos
-    if (!br.com.ifba.usuario.validar.ValidadorUsuario.camposPreenchidos(
-            nome, email, senha, confirmarSenha)) {
+        String nome = txtNome.getText();
+        String email = txtEmail.getText();
+        String senha = new String(txtSenha.getPassword());
+        String confirmarSenha = new String(txtConSenha.getPassword());
 
-        javax.swing.JOptionPane.showMessageDialog(
-            this,
-            "Preencha todos os campos.",
-            "Erro",
-            javax.swing.JOptionPane.ERROR_MESSAGE
-        );
-
-        // Verifica se as senhas coincidem
-    }   else if (!br.com.ifba.usuario.validar.ValidadorUsuario.senhasCoincidem(
-            senha, confirmarSenha)) {
+        // Confere a confirmação da senha.
+        if (!br.com.ifba.usuario.validar.ValidadorUsuario.senhasCoincidem(
+                senha, confirmarSenha)) {
 
             javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "As senhas não coincidem.",
-                "Erro",
-                javax.swing.JOptionPane.ERROR_MESSAGE
-            );
-
-            // Verifica se a senha possui no mínimo 8 caracteres
-        }   else if (!br.com.ifba.usuario.validar.ValidadorUsuario.senhaForte(senha)) {
-
-                javax.swing.JOptionPane.showMessageDialog(
                     this,
-                    "A senha deve possuir no mínimo 8 caracteres.",
+                    "As senhas não coincidem.",
                     "Erro",
                     javax.swing.JOptionPane.ERROR_MESSAGE
-                );
+            );
+            return;
+        }
 
-                // Verifica se o e-mail contém alguma palavra proibida
-            }   else if (br.com.ifba.usuario.validar.ValidadorUsuario.contemPalavraProibida(email)) {
+        try {
+            br.com.ifba.usuario.entity.Usuario usuario
+                    = new br.com.ifba.usuario.entity.Usuario(
+                            nome.trim(), email.trim(), senha);
 
-                    javax.swing.JOptionPane.showMessageDialog(
-                        this,
-                        "Login contém palavra não permitida.",
-                        "Erro",
-                        javax.swing.JOptionPane.ERROR_MESSAGE
-                    );
+            // O Service valida os dados por meio do Controller.
+            controller.save(usuario);
 
-                }   else {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Cadastro realizado com sucesso!\n\n"
+                    + "Nome: " + usuario.getNome()
+                    + "\nE-mail: " + usuario.getEmail(),
+                    "Sucesso",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
 
-                        // Cria o objeto Usuario com os dados da tela
-                        br.com.ifba.usuario.entity.Usuario usuario =
-                        new br.com.ifba.usuario.entity.Usuario(nome, email, senha);
-                        
-                        // Tenta cadastrar o usuário no repositório
-                        try {
-                            dao.save(usuario);
-                        } catch (RuntimeException e) {
-                            javax.swing.JOptionPane.showMessageDialog(
-                                this,
-                                e.getMessage(),
-                                "Erro",
-                                javax.swing.JOptionPane.ERROR_MESSAGE
-                            );
-                            return;
-                        }
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    e.getMessage(),
+                    "Erro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
 
-                        // Exibe os dados armazenados no objeto
-                        javax.swing.JOptionPane.showMessageDialog(
-                            this,
-                            "Cadastro realizado com sucesso!\n\n"
-                            + "Nome: " + usuario.getNome()
-                            + "\nE-mail: " + usuario.getEmail()
-                            + "\nSenha: " + usuario.getSenha(),
-                            "Sucesso",
-                            javax.swing.JOptionPane.INFORMATION_MESSAGE
-                        );
-                    }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -225,26 +192,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaCadastroUsuario().setVisible(true));
+        // Monta as dependências na classe principal.
+        com.mycompany.prg03gabrielboaventura.Main.main(args);
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;

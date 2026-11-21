@@ -10,7 +10,7 @@ package br.com.ifba.usuario.view;
  */
 
 import br.com.ifba.usuario.entity.Usuario;
-import br.com.ifba.usuario.dao.UsuarioDao;
+import br.com.ifba.usuario.controller.UsuarioIController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,14 +24,13 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
      * Creates new form TelaCRUDUsuario
      */
     
-    // Repositório responsável pelas operações no banco
-    // DAO responsável pelas operações no banco
-    private final UsuarioDao dao = new UsuarioDao();
+    // Controller recebido pela tela, sem acesso direto ao DAO.
+    private final UsuarioIController controller;
 
     // Carrega os usuários cadastrados na tabela
     private void carregarUsuarios() {
         try {
-            List<Usuario> usuarios = dao.findAll();
+            List<Usuario> usuarios = controller.findAll();
 
             DefaultTableModel modelo =
                 (DefaultTableModel) tblUsuarios.getModel();
@@ -56,7 +55,8 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
          }
     }
     
-    public TelaCRUDUsuario() {
+    public TelaCRUDUsuario(UsuarioIController controller) {
+        this.controller = java.util.Objects.requireNonNull(controller);
         initComponents();
         carregarUsuarios();
     }
@@ -190,8 +190,8 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
         try {
             // Pesquisa no banco ou lista todos se o campo estiver vazio
             List<Usuario> usuarios = texto.isEmpty()
-            ? dao.findAll()
-            : dao.pesquisar(texto);
+            ? controller.findAll()
+            : controller.pesquisar(texto);
 
             DefaultTableModel modelo =
             (DefaultTableModel) tblUsuarios.getModel();
@@ -238,7 +238,7 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
         try {
             // Cadastra o usuário no MySQL
             Usuario usuario = new Usuario(nome.trim(), email.trim(), senha);
-            dao.save(usuario);
+            controller.save(usuario);
 
             JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
 
@@ -285,14 +285,14 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
         try {
             // Exclui o usuário no banco de dados
             // Busca o usuário antes de excluir
-            Usuario usuario = dao.findById(id);
+            Usuario usuario = controller.findById(id);
 
             if (usuario == null) {
                 throw new UsuarioNaoEncontradoException(id);
             }
 
-            // Exclui o usuário pelo DAO
-            dao.delete(usuario);;
+            // Exclui o usuário por meio do Controller.
+            controller.delete(usuario);
 
             JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
 
@@ -335,7 +335,7 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
 
         try {
             // Busca os dados atuais do usuário no banco
-            Usuario usuario = dao.findById(id);
+            Usuario usuario = controller.findById(id);
 
             if (usuario == null) {
                 throw new UsuarioNaoEncontradoException(id);
@@ -361,7 +361,7 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
             usuario.setNome(nome.trim());
             usuario.setEmail(email.trim());
 
-            dao.update(usuario);
+            controller.update(usuario);
 
             JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!");
 
@@ -392,27 +392,11 @@ public class TelaCRUDUsuario extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaCRUDUsuario().setVisible(true));
-    }
+    
+public static void main(String args[]) {
+    // A inicialização da tela agora é feita pela classe Main.
+    com.mycompany.prg03gabrielboaventura.Main.main(args);
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
