@@ -8,7 +8,6 @@ package br.com.ifba.usuario.validar;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-
 /**
  *
  * @author gabri
@@ -18,19 +17,19 @@ public class ValidadorUsuarioTest {
 
     @Test
     public void deveRetornarTrueQuandoCamposEstaoPreenchidos() {
-        assertTrue(ValidadorUsuario.camposPreenchidos(
+        assertTrue(ValidadorUsuario.todosOsCamposPreenchidos(
                 "Gabriel", "gabriel@email.com", "12345678", "12345678"));
     }
 
     @Test
     public void deveRetornarFalseQuandoCampoEstaVazio() {
-        assertFalse(ValidadorUsuario.camposPreenchidos(
+        assertFalse(ValidadorUsuario.todosOsCamposPreenchidos(
                 "", "gabriel@email.com", "12345678", "12345678"));
     }
 
     @Test
     public void deveRetornarFalseQuandoCampoForNull() {
-        assertFalse(ValidadorUsuario.camposPreenchidos(
+        assertFalse(ValidadorUsuario.todosOsCamposPreenchidos(
                 null, "gabriel@email.com", "12345678", "12345678"));
     }
 
@@ -54,17 +53,17 @@ public class ValidadorUsuarioTest {
 
     @Test
     public void deveRetornarTrueQuandoSenhaTemOitoCaracteres() {
-        assertTrue(ValidadorUsuario.senhaForte("12345678"));
+        assertTrue(ValidadorUsuario.senhaPossuiTamanhoMinimo("12345678"));
     }
 
     @Test
     public void deveRetornarFalseQuandoSenhaTemMenosDeOitoCaracteres() {
-        assertFalse(ValidadorUsuario.senhaForte("1234567"));
+        assertFalse(ValidadorUsuario.senhaPossuiTamanhoMinimo("1234567"));
     }
 
     @Test
     public void deveRetornarFalseQuandoSenhaForNull() {
-        assertFalse(ValidadorUsuario.senhaForte(null));
+        assertFalse(ValidadorUsuario.senhaPossuiTamanhoMinimo(null));
     }
 
     @Test

@@ -10,7 +10,6 @@ public class JPAUtilTest {
     public void deveConectarAoBancoDeDados() {
         try (EntityManager em = JPAUtil.getEntityManager()) {
             assertTrue(em.isOpen());
-            System.out.println("Conexão com MySQL realizada com sucesso!");
         }
     }
 }

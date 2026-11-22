@@ -1,22 +1,21 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.com.ifba.usuario.controller;
+
+import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.service.UsuarioIService;
+import java.util.List;
 
 /**
  *
  * @author gabri
  */
-import br.com.ifba.usuario.entity.Usuario;
-import br.com.ifba.usuario.service.UsuarioIService;
-import java.util.List;
-
 public class UsuarioController implements UsuarioIController {
 
     private final UsuarioIService service;
 
-    // Recebe o Service pelo construtor, sem criar sua implementação.
     public UsuarioController(UsuarioIService service) {
         this.service = service;
     }

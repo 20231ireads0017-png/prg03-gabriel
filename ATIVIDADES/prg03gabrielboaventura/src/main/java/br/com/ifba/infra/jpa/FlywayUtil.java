@@ -4,14 +4,12 @@
  */
 package br.com.ifba.infra.jpa;
 
+import org.flywaydb.core.Flyway;
+
 /**
  *
  * @author gabri
  */
-
-
-import org.flywaydb.core.Flyway;
-
 public class FlywayUtil {
 
     public static void migrar() {
@@ -19,16 +17,15 @@ public class FlywayUtil {
 
         if (senha == null || senha.isBlank()) {
             throw new IllegalStateException(
-                "Variável de ambiente DB_PASSWORD não configurada."
+                    "Variável de ambiente DB_PASSWORD não configurada."
             );
         }
 
-        // Aplica as migrations pendentes no MySQL
         Flyway flyway = Flyway.configure()
                 .dataSource(
-                    "jdbc:mysql://localhost:3306/sistema_sus",
-                    "sus_app",
-                    senha
+                        "jdbc:mysql://localhost:3306/sistema_sus",
+                        "sus_app",
+                        senha
                 )
                 .locations("classpath:db/migration")
                 .load();

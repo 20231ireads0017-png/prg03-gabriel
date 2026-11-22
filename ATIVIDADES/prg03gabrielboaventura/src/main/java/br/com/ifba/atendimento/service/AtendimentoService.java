@@ -4,27 +4,24 @@
  */
 package br.com.ifba.atendimento.service;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.atendimento.entity.Atendimento;
 import br.com.ifba.atendimento.entity.ProcessadorAtendimento;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class AtendimentoService implements AtendimentoIService {
 
     private final ProcessadorAtendimento processador;
 
-    // Recebe o processador por injeção de dependência.
     public AtendimentoService(ProcessadorAtendimento processador) {
         this.processador = Objects.requireNonNull(processador);
     }
 
     @Override
     public String processar(Atendimento atendimento) {
-        // Valida os dados antes do processamento.
         if (atendimento == null) {
             throw new IllegalArgumentException(
                     "Atendimento não pode ser nulo.");
@@ -45,4 +42,3 @@ public class AtendimentoService implements AtendimentoIService {
         return processador.processar(atendimento);
     }
 }
-

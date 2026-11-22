@@ -15,7 +15,6 @@ import java.util.List;
 
 public class FakeConsultaDao implements ConsultaIDao {
 
-    // Simula o armazenamento das consultas sem banco de dados.
     private final List<Consulta> consultas = new ArrayList<>();
 
     @Override
@@ -47,4 +46,3 @@ public class FakeConsultaDao implements ConsultaIDao {
         return new ArrayList<>(consultas);
     }
 }
-

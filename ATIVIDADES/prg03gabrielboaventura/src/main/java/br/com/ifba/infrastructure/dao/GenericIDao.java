@@ -4,29 +4,22 @@
  */
 package br.com.ifba.infrastructure.dao;
 
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.infrastructure.entity.PersistenceEntity;
-import java.util.List;
-
 public interface GenericIDao<Entity extends PersistenceEntity> {
 
-    // Salva uma nova entidade
     Entity save(Entity entity);
 
-    // Atualiza uma entidade existente
     Entity update(Entity entity);
 
-    // Exclui uma entidade
     void delete(Entity entity);
 
-    // Busca uma entidade pelo ID
     Entity findById(Long id);
 
-    // Lista todas as entidades
     List<Entity> findAll();
 }
-

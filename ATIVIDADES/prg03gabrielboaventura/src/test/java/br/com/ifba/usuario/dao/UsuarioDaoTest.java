@@ -21,14 +21,12 @@ public class UsuarioDaoTest {
 
         UsuarioDao dao = new UsuarioDao();
 
-        // Usuário inválido: nome não informado
         Usuario usuario = new Usuario(
                 null,
                 "teste.dao.invalido@email.com",
                 "12345678"
         );
 
-        // Verifica se o DAO lança a exceção esperada
         assertThrows(DaoException.class, () -> {
             dao.save(usuario);
         });

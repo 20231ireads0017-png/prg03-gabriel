@@ -4,19 +4,17 @@
  */
 package br.com.ifba.usuario.dao;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.infrastructure.dao.GenericIDao;
 import br.com.ifba.usuario.entity.Usuario;
 import java.util.List;
 
+/**
+ *
+ * @author gabri
+ */
 public interface UsuarioIDao extends GenericIDao<Usuario> {
 
-    // Busca um usuário pelo e-mail
     Usuario findByEmail(String email);
+
     List<Usuario> pesquisar(String texto);
 }
-

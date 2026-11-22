@@ -4,21 +4,18 @@
  */
 package br.com.ifba.exame.entity;
 
+import br.com.ifba.atendimento.entity.Atendimento;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.atendimento.entity.Atendimento;
-
 public class Exame extends Atendimento {
 
-    // Cria um novo exame
     public Exame(String especialidade, String data) {
         super(especialidade, data);
     }
 
-    // Retorna o tipo específico do atendimento
     @Override
     public String getTipoAtendimento() {
         return "Exame";

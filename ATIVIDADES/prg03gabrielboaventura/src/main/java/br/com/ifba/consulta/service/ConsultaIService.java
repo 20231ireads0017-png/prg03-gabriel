@@ -4,14 +4,13 @@
  */
 package br.com.ifba.consulta.service;
 
+import br.com.ifba.consulta.entity.Consulta;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.consulta.entity.Consulta;
-import java.util.List;
-
 public interface ConsultaIService {
 
     Consulta save(Consulta consulta);

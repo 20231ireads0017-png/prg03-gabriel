@@ -4,22 +4,22 @@
  */
 package br.com.ifba.usuario.service;
 
-/**
- *
- * @author gabri
- */
 import br.com.ifba.usuario.dao.UsuarioIDao;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class UsuarioService implements UsuarioIService {
 
     private final UsuarioIDao dao;
 
-    // Recebe o DAO por injeção de dependência.
     public UsuarioService(UsuarioIDao dao) {
-        this.dao = java.util.Objects.requireNonNull(dao);
+        this.dao = Objects.requireNonNull(dao);
     }
 
     @Override
@@ -71,7 +71,6 @@ public class UsuarioService implements UsuarioIService {
         return dao.pesquisar(texto);
     }
 
-    // Centraliza as regras de cadastro e atualização.
     private void validarUsuario(Usuario usuario) {
         if (usuario == null) {
             throw new IllegalArgumentException(
@@ -89,7 +88,7 @@ public class UsuarioService implements UsuarioIService {
                     "Preencha todos os campos.");
         }
 
-        if (!ValidadorUsuario.senhaForte(usuario.getSenha())) {
+        if (!ValidadorUsuario.senhaPossuiTamanhoMinimo(usuario.getSenha())) {
             throw new IllegalArgumentException(
                     "A senha deve possuir no mínimo 8 caracteres.");
         }

@@ -4,18 +4,16 @@
  */
 package br.com.ifba.consulta.dao;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.consulta.entity.Consulta;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author gabri
+ */
 public class ConsultaDao implements ConsultaIDao {
 
-    // Armazena as consultas durante a execução.
     private final List<Consulta> consultas = new ArrayList<>();
 
     @Override
@@ -48,4 +46,3 @@ public class ConsultaDao implements ConsultaIDao {
         return new ArrayList<>(consultas);
     }
 }
-

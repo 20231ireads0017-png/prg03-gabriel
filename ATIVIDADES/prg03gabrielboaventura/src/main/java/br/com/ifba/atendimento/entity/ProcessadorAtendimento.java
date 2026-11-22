@@ -8,10 +8,8 @@ package br.com.ifba.atendimento.entity;
  *
  * @author gabri
  */
-
 public class ProcessadorAtendimento {
 
-    // Retorna o tipo do atendimento recebido
     public String processar(Atendimento atendimento) {
         return atendimento.getTipoAtendimento();
     }

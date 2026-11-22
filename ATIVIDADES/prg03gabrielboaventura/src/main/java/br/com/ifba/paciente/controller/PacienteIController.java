@@ -4,15 +4,13 @@
  */
 package br.com.ifba.paciente.controller;
 
+import br.com.ifba.paciente.entity.Paciente;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-
-import br.com.ifba.paciente.entity.Paciente;
-import java.util.List;
-
 public interface PacienteIController {
 
     Paciente save(Paciente paciente);

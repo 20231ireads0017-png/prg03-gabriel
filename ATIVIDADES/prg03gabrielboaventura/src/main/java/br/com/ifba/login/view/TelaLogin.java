@@ -11,7 +11,6 @@ import br.com.ifba.usuario.entity.Usuario;
  *
  * @author gabri
  */
-
 public class TelaLogin extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLogin.class.getName());
@@ -150,12 +149,10 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
-
         String loginDigitado = txtLogin.getText();
         String senhaDigitada = new String(txtSenha.getPassword());
 
         try {
-            // A autenticação é realizada pelo Service via Controller.
             boolean autenticado = controller.autenticar(
                     loginDigitado, senhaDigitada);
 
@@ -174,7 +171,6 @@ public class TelaLogin extends javax.swing.JFrame {
                         javax.swing.JOptionPane.ERROR_MESSAGE
                 );
             }
-
         } catch (RuntimeException e) {
             javax.swing.JOptionPane.showMessageDialog(
                     this,
@@ -191,22 +187,17 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void lblCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastrarMouseClicked
         // TODO add your handling code here:
-
-        // Abre o cadastro utilizando o mesmo Controller.
         br.com.ifba.usuario.view.TelaCadastroUsuario telaCadastro
                 = new br.com.ifba.usuario.view.TelaCadastroUsuario(controller);
-
         telaCadastro.setVisible(true);
-
     }//GEN-LAST:event_lblCadastrarMouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    // A classe Main monta as dependências da aplicação.
-    com.mycompany.prg03gabrielboaventura.Main.main(args);
-}
+        com.mycompany.prg03gabrielboaventura.Main.main(args);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

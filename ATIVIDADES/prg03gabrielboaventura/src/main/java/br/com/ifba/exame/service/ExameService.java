@@ -4,21 +4,19 @@
  */
 package br.com.ifba.exame.service;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.exame.dao.ExameIDao;
 import br.com.ifba.exame.entity.Exame;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class ExameService implements ExameIService {
 
     private final ExameIDao dao;
 
-    // Recebe o DAO por injeção de dependência.
     public ExameService(ExameIDao dao) {
         this.dao = Objects.requireNonNull(dao);
     }
@@ -61,7 +59,6 @@ public class ExameService implements ExameIService {
         return dao.findAll();
     }
 
-    // Centraliza as validações do exame.
     private void validarExame(Exame exame) {
         if (exame == null) {
             throw new IllegalArgumentException(
@@ -81,4 +78,3 @@ public class ExameService implements ExameIService {
         }
     }
 }
-

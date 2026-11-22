@@ -14,7 +14,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
 
-    // A tela recebe o Controller sem conhecer o DAO.
     private final UsuarioIController controller;
 
     /**
@@ -141,7 +140,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         String senha = new String(txtSenha.getPassword());
         String confirmarSenha = new String(txtConSenha.getPassword());
 
-        // Confere a confirmação da senha.
         if (!br.com.ifba.usuario.validar.ValidadorUsuario.senhasCoincidem(
                 senha, confirmarSenha)) {
 
@@ -159,7 +157,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     = new br.com.ifba.usuario.entity.Usuario(
                             nome.trim(), email.trim(), senha);
 
-            // O Service valida os dados por meio do Controller.
             controller.save(usuario);
 
             javax.swing.JOptionPane.showMessageDialog(
@@ -184,7 +181,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        // Fecha a tela de cadastro
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -192,7 +188,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        // Monta as dependências na classe principal.
         com.mycompany.prg03gabrielboaventura.Main.main(args);
     }
 

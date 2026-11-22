@@ -16,7 +16,6 @@ import java.util.Objects;
 
 public class FakePacienteDao implements PacienteIDao {
 
-    // Simula o armazenamento dos pacientes em memória.
     private final List<Paciente> pacientes = new ArrayList<>();
 
     @Override
@@ -60,4 +59,3 @@ public class FakePacienteDao implements PacienteIDao {
         return new ArrayList<>(pacientes);
     }
 }
-

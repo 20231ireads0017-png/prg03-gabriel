@@ -39,51 +39,42 @@ public class UsuarioTest {
 
         assertFalse(resultado);
     }
-    
-    // Verifica o relacionamento entre Usuario e Paciente
+
     @Test
     public void deveRelacionarPacienteAoUsuario() {
-
-        // Cria um novo usuário
         Usuario usuario = new Usuario(
-            "Gabriel",
-            "gabriel@email.com",
-            "12345678"
+                "Gabriel",
+                "gabriel@email.com",
+                "12345678"
         );
 
-        // Cria um novo paciente
         Paciente paciente = new Paciente(
-            "Gabriel",
-            "123456789"
+                "Gabriel",
+                "123456789"
         );
 
-        // Relaciona o paciente ao usuário
         usuario.setPaciente(paciente);
 
-        // Verifica se o paciente retornado é o mesmo que foi relacionado
         assertEquals(paciente, usuario.getPaciente());
     }
-    
-    // Verifica se usuários com o mesmo e-mail são considerados iguais
+
     @Test
     public void deveConsiderarUsuariosComMesmoEmailIguais() {
-
         Usuario usuario1 = new Usuario(
-            "Gabriel",
-            "gabriel@email.com",
-            "12345678"
+                "Gabriel",
+                "gabriel@email.com",
+                "12345678"
         );
 
         Usuario usuario2 = new Usuario(
-            "Outro Nome",
-            "gabriel@email.com",
-            "outraSenha"
+                "Outro Nome",
+                "gabriel@email.com",
+                "outraSenha"
         );
 
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(usuario1);
 
-        // A lista deve encontrar usuario2 porque os e-mails são iguais
         assertTrue(usuarios.contains(usuario2));
     }
 }
