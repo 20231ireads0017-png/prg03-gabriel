@@ -9,11 +9,13 @@ import br.com.ifba.infrastructure.dao.GenericDao;
 import br.com.ifba.usuario.entity.Usuario;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author gabri
  */
+@Repository
 public class UsuarioDao extends GenericDao<Usuario>
         implements UsuarioIDao {
 
