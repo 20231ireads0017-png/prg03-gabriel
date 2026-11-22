@@ -4,14 +4,13 @@
  */
 package br.com.ifba.consulta.dao;
 
+import br.com.ifba.consulta.entity.Consulta;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.consulta.entity.Consulta;
-import java.util.List;
-
 public interface ConsultaIDao {
 
     Consulta save(Consulta consulta);
@@ -22,4 +21,3 @@ public interface ConsultaIDao {
 
     List<Consulta> findAll();
 }
-

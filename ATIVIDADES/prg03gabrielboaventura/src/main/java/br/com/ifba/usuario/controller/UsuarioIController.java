@@ -4,14 +4,13 @@
  */
 package br.com.ifba.usuario.controller;
 
+import br.com.ifba.usuario.entity.Usuario;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.usuario.entity.Usuario;
-import java.util.List;
-
 public interface UsuarioIController {
 
     Usuario save(Usuario usuario);
@@ -25,9 +24,8 @@ public interface UsuarioIController {
     List<Usuario> findAll();
 
     Usuario findByEmail(String email);
-    
+
     boolean autenticar(String email, String senha);
 
     List<Usuario> pesquisar(String texto);
 }
-

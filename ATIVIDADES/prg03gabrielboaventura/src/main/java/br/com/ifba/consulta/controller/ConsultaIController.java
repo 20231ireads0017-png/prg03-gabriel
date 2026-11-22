@@ -4,14 +4,13 @@
  */
 package br.com.ifba.consulta.controller;
 
+import br.com.ifba.consulta.entity.Consulta;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.consulta.entity.Consulta;
-import java.util.List;
-
 public interface ConsultaIController {
 
     Consulta save(Consulta consulta);
@@ -22,4 +21,3 @@ public interface ConsultaIController {
 
     List<Consulta> findAll();
 }
-

@@ -4,14 +4,13 @@
  */
 package br.com.ifba.exame.controller;
 
+import br.com.ifba.exame.entity.Exame;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.exame.entity.Exame;
-import java.util.List;
-
 public interface ExameIController {
 
     Exame save(Exame exame);
@@ -22,4 +21,3 @@ public interface ExameIController {
 
     List<Exame> findAll();
 }
-

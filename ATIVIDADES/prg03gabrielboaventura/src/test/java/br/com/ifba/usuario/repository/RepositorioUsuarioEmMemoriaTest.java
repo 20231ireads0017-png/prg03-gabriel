@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RepositorioUsuarioEmMemoriaTest {
 
-    // Verifica se o usuário cadastrado aparece na lista
     @Test
     public void deveCadastrarUsuarioEListar() {
         RepositorioUsuarioEmMemoria repositorio =
@@ -29,7 +28,6 @@ public class RepositorioUsuarioEmMemoriaTest {
         assertTrue(repositorio.listarTodos().contains(usuario));
     }
 
-    // Verifica se a busca pelo login retorna o usuário correto
     @Test
     public void deveBuscarUsuarioPorLogin() {
         RepositorioUsuarioEmMemoria repositorio =
@@ -50,7 +48,6 @@ public class RepositorioUsuarioEmMemoriaTest {
         assertEquals(usuario2, resultado);
     }
 
-    // Verifica a busca por um login que não existe
     @Test
     public void deveRetornarNullQuandoLoginNaoExiste() {
         RepositorioUsuarioEmMemoria repositorio =
@@ -62,7 +59,6 @@ public class RepositorioUsuarioEmMemoriaTest {
         assertNull(resultado);
     }
 
-    // Verifica se não é permitido cadastrar o mesmo login duas vezes
     @Test
     public void naoDeveCadastrarLoginDuplicado() {
         RepositorioUsuarioEmMemoria repositorio =

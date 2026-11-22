@@ -4,28 +4,25 @@
  */
 package br.com.ifba.infrastructure.dao;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.infra.jpa.JPAUtil;
 import br.com.ifba.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import java.util.List;
 
+/**
+ *
+ * @author gabri
+ */
 public class GenericDao<Entity extends PersistenceEntity>
         implements GenericIDao<Entity> {
 
     private final Class<Entity> tipo;
 
-    // Identifica a entidade utilizada pelo DAO
     public GenericDao(Class<Entity> tipo) {
         this.tipo = tipo;
     }
 
-    // Salva uma nova entidade no banco
     @Override
     public Entity save(Entity entity) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -48,7 +45,6 @@ public class GenericDao<Entity extends PersistenceEntity>
         }
     }
 
-    // Atualiza uma entidade existente
     @Override
     public Entity update(Entity entity) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -71,7 +67,6 @@ public class GenericDao<Entity extends PersistenceEntity>
         }
     }
 
-    // Exclui uma entidade do banco
     @Override
     public void delete(Entity entity) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -94,7 +89,6 @@ public class GenericDao<Entity extends PersistenceEntity>
         }
     }
 
-    // Busca uma entidade pelo ID
     @Override
     public Entity findById(Long id) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -107,7 +101,6 @@ public class GenericDao<Entity extends PersistenceEntity>
         }
     }
 
-    // Lista todas as entidades
     @Override
     public List<Entity> findAll() {
         EntityManager em = JPAUtil.getEntityManager();
@@ -121,5 +114,3 @@ public class GenericDao<Entity extends PersistenceEntity>
         }
     }
 }
-
-

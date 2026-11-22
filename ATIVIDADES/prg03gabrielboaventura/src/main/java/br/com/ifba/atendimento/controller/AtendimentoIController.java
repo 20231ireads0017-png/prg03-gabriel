@@ -4,15 +4,13 @@
  */
 package br.com.ifba.atendimento.controller;
 
+import br.com.ifba.atendimento.entity.Atendimento;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.atendimento.entity.Atendimento;
-
 public interface AtendimentoIController {
 
     String processar(Atendimento atendimento);
 }
-

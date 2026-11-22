@@ -4,21 +4,19 @@
  */
 package br.com.ifba.exame.controller;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.exame.entity.Exame;
 import br.com.ifba.exame.service.ExameIService;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class ExameController implements ExameIController {
 
     private final ExameIService service;
 
-    // Recebe o Service por injeção de dependência.
     public ExameController(ExameIService service) {
         this.service = Objects.requireNonNull(service);
     }

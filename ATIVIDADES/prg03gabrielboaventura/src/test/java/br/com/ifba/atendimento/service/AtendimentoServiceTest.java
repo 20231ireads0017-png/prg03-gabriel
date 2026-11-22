@@ -22,7 +22,6 @@ public class AtendimentoServiceTest {
 
     @BeforeEach
     void preparar() {
-        // Injeta o processador sem acessar o banco de dados.
         service = new AtendimentoService(new ProcessadorAtendimento());
     }
 
@@ -62,4 +61,3 @@ public class AtendimentoServiceTest {
                 () -> service.processar(exame));
     }
 }
-

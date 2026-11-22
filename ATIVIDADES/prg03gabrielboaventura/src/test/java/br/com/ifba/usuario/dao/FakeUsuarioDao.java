@@ -80,4 +80,3 @@ public class FakeUsuarioDao implements UsuarioIDao {
         return resultado;
     }
 }
-

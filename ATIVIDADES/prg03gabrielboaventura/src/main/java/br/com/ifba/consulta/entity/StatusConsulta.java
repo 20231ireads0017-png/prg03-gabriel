@@ -8,12 +8,9 @@ package br.com.ifba.consulta.entity;
  *
  * @author gabri
  */
-
-// Define os possíveis status de uma consulta
 public enum StatusConsulta {
-    
+
     AGENDADA,
     REALIZADA,
     CANCELADA
-    
 }

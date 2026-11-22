@@ -4,16 +4,15 @@
  */
 package br.com.ifba.paciente.dao;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.paciente.entity.Paciente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class PacienteDao implements PacienteIDao {
 
     private final List<Paciente> pacientes = new ArrayList<>();
@@ -59,4 +58,3 @@ public class PacienteDao implements PacienteIDao {
         return new ArrayList<>(pacientes);
     }
 }
-

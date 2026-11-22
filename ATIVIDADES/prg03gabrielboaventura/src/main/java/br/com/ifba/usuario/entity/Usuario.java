@@ -2,12 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package br.com.ifba.usuario.entity;
 
 import br.com.ifba.infrastructure.entity.PersistenceEntity;
-import br.com.ifba.usuario.interfaces.Autenticavel;
 import br.com.ifba.paciente.entity.Paciente;
+import br.com.ifba.usuario.interfaces.Autenticavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -18,12 +17,10 @@ import java.util.Objects;
  *
  * @author gabri
  */
-
 @Entity
 @Table(name = "usuarios")
 public class Usuario extends PersistenceEntity implements Autenticavel {
 
-    // Dados do usuário
     @Column(nullable = false)
     private String nome;
 
@@ -33,7 +30,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
     @Column(nullable = false)
     private String senha;
 
-    // Telefone opcional do usuário
     @Column(length = 20)
     private String telefone;
 
@@ -45,14 +41,12 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
     public Usuario() {
     }
 
-    // Construtor com os dados do usuário
     public Usuario(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
     }
 
-    // Métodos de acesso do nome
     public String getNome() {
         return nome;
     }
@@ -61,7 +55,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
         this.nome = nome;
     }
 
-    // Métodos de acesso do e-mail
     public String getEmail() {
         return email;
     }
@@ -70,7 +63,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
         this.email = email;
     }
 
-    // Métodos de acesso da senha
     public String getSenha() {
         return senha;
     }
@@ -79,7 +71,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
         this.senha = senha;
     }
 
-    // Métodos de acesso do telefone
     public String getTelefone() {
         return telefone;
     }
@@ -88,17 +79,14 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
         this.telefone = telefone;
     }
 
-    // Retorna o paciente relacionado ao usuário
     public Paciente getPaciente() {
         return paciente;
     }
 
-    // Define o paciente relacionado ao usuário
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
 
-    // Verifica se o e-mail e a senha estão corretos
     @Override
     public boolean autenticar(String email, String senha) {
         return this.email.equals(email) && this.senha.equals(senha);
@@ -119,7 +107,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
         return Objects.equals(this.email, usuario.email);
     }
 
-    // Gera o código de comparação usando o mesmo campo do equals
     @Override
     public int hashCode() {
         return Objects.hash(email);

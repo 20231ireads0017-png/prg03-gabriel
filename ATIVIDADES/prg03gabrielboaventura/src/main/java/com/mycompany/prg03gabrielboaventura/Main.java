@@ -4,11 +4,6 @@
  */
 package com.mycompany.prg03gabrielboaventura;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.login.view.TelaLogin;
 import br.com.ifba.usuario.controller.UsuarioController;
 import br.com.ifba.usuario.controller.UsuarioIController;
@@ -17,11 +12,14 @@ import br.com.ifba.usuario.dao.UsuarioIDao;
 import br.com.ifba.usuario.service.UsuarioIService;
 import br.com.ifba.usuario.service.UsuarioService;
 
+/**
+ *
+ * @author gabri
+ */
 public class Main {
 
     public static void main(String[] args) {
 
-        // Monta as dependências da aplicação.
         UsuarioIDao dao = new UsuarioDao();
         UsuarioIService service = new UsuarioService(dao);
         UsuarioIController controller = new UsuarioController(service);
@@ -31,4 +29,3 @@ public class Main {
         );
     }
 }
-

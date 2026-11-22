@@ -4,21 +4,19 @@
  */
 package br.com.ifba.paciente.controller;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.paciente.entity.Paciente;
 import br.com.ifba.paciente.service.PacienteIService;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class PacienteController implements PacienteIController {
 
     private final PacienteIService service;
 
-    // Recebe o Service por injeção de dependência.
     public PacienteController(PacienteIService service) {
         this.service = Objects.requireNonNull(service);
     }

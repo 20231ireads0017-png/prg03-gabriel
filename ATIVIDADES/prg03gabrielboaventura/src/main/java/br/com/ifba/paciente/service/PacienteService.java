@@ -4,21 +4,19 @@
  */
 package br.com.ifba.paciente.service;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.paciente.dao.PacienteIDao;
 import br.com.ifba.paciente.entity.Paciente;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class PacienteService implements PacienteIService {
 
     private final PacienteIDao dao;
 
-    // Recebe o DAO por injeção de dependência.
     public PacienteService(PacienteIDao dao) {
         this.dao = Objects.requireNonNull(dao);
     }
@@ -27,7 +25,6 @@ public class PacienteService implements PacienteIService {
     public Paciente save(Paciente paciente) {
         validarPaciente(paciente);
 
-        // Impede o cadastro de cartões SUS duplicados.
         if (dao.findByCartaoSus(paciente.getCartaoSus()) != null) {
             throw new IllegalArgumentException(
                     "Já existe um paciente com este cartão SUS.");
@@ -78,7 +75,6 @@ public class PacienteService implements PacienteIService {
         return dao.findAll();
     }
 
-    // Centraliza as regras de validação do paciente.
     private void validarPaciente(Paciente paciente) {
         if (paciente == null) {
             throw new IllegalArgumentException(
@@ -98,5 +94,3 @@ public class PacienteService implements PacienteIService {
         }
     }
 }
-
-

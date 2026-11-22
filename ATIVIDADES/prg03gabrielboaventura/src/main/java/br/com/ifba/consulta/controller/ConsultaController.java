@@ -4,21 +4,19 @@
  */
 package br.com.ifba.consulta.controller;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.consulta.entity.Consulta;
 import br.com.ifba.consulta.service.ConsultaIService;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class ConsultaController implements ConsultaIController {
 
     private final ConsultaIService service;
 
-    // Recebe o Service por injeção de dependência.
     public ConsultaController(ConsultaIService service) {
         this.service = Objects.requireNonNull(service);
     }
@@ -43,4 +41,3 @@ public class ConsultaController implements ConsultaIController {
         return service.findAll();
     }
 }
-

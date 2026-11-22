@@ -8,10 +8,8 @@ package br.com.ifba.infrastructure.dao;
  *
  * @author gabri
  */
-
 public class DaoException extends RuntimeException {
 
-    // Informa o erro ocorrido no acesso ao banco
     public DaoException(String mensagem, Throwable causa) {
         super(mensagem, causa);
     }

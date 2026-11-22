@@ -4,14 +4,13 @@
  */
 package br.com.ifba.usuario.service;
 
+import br.com.ifba.usuario.entity.Usuario;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.usuario.entity.Usuario;
-import java.util.List;
-
 public interface UsuarioIService {
 
     Usuario save(Usuario usuario);

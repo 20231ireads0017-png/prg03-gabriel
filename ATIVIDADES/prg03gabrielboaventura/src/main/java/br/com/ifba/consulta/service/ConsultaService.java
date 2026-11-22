@@ -4,21 +4,19 @@
  */
 package br.com.ifba.consulta.service;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.consulta.dao.ConsultaIDao;
 import br.com.ifba.consulta.entity.Consulta;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class ConsultaService implements ConsultaIService {
 
     private final ConsultaIDao dao;
 
-    // Recebe o DAO por injeção de dependência.
     public ConsultaService(ConsultaIDao dao) {
         this.dao = Objects.requireNonNull(dao);
     }
@@ -61,7 +59,6 @@ public class ConsultaService implements ConsultaIService {
         return dao.findAll();
     }
 
-    // Centraliza as validações da consulta.
     private void validarConsulta(Consulta consulta) {
         if (consulta == null) {
             throw new IllegalArgumentException(
@@ -81,4 +78,3 @@ public class ConsultaService implements ConsultaIService {
         }
     }
 }
-

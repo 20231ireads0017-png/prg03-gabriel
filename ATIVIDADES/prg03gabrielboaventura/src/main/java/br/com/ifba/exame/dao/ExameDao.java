@@ -4,18 +4,16 @@
  */
 package br.com.ifba.exame.dao;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.exame.entity.Exame;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author gabri
+ */
 public class ExameDao implements ExameIDao {
 
-    // Armazena os exames durante a execução.
     private final List<Exame> exames = new ArrayList<>();
 
     @Override
@@ -48,4 +46,3 @@ public class ExameDao implements ExameIDao {
         return new ArrayList<>(exames);
     }
 }
-

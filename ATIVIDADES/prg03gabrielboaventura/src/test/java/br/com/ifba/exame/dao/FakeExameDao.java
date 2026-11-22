@@ -15,7 +15,6 @@ import java.util.List;
 
 public class FakeExameDao implements ExameIDao {
 
-    // Simula o armazenamento dos exames sem banco de dados.
     private final List<Exame> exames = new ArrayList<>();
 
     @Override
@@ -47,4 +46,3 @@ public class FakeExameDao implements ExameIDao {
         return new ArrayList<>(exames);
     }
 }
-

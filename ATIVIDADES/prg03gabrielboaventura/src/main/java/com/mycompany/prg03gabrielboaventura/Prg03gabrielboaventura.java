@@ -4,31 +4,32 @@
 
 package com.mycompany.prg03gabrielboaventura;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.atendimento.entity.ProcessadorAtendimento;
 import br.com.ifba.consulta.entity.Consulta;
 import br.com.ifba.exame.entity.Exame;
 import br.com.ifba.infra.jpa.FlywayUtil;
 
+/**
+ *
+ * @author gabri
+ */
 public class Prg03gabrielboaventura {
 
     public static void main(String[] args) {
+        prepararBancoDeDados();
+        demonstrarProcessamentoAtendimentos();
+    }
 
-        // Atualiza o banco antes de iniciar a aplicação
+    private static void prepararBancoDeDados() {
         FlywayUtil.migrar();
+    }
 
-        // Cria o processador de atendimentos
+    private static void demonstrarProcessamentoAtendimentos() {
         ProcessadorAtendimento processador = new ProcessadorAtendimento();
 
-        // Cria uma consulta e um exame
         Consulta consulta = new Consulta("Cardiologia", "27/09/2026");
         Exame exame = new Exame("Radiologia", "27/09/2026");
 
-        // Processa os dois tipos de atendimento
         System.out.println(processador.processar(consulta));
         System.out.println(processador.processar(exame));
     }

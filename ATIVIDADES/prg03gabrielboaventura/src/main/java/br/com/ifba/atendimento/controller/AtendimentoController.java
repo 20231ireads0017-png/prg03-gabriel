@@ -4,20 +4,18 @@
  */
 package br.com.ifba.atendimento.controller;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.atendimento.entity.Atendimento;
 import br.com.ifba.atendimento.service.AtendimentoIService;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class AtendimentoController implements AtendimentoIController {
 
     private final AtendimentoIService service;
 
-    // Recebe o Service por injeção de dependência.
     public AtendimentoController(AtendimentoIService service) {
         this.service = Objects.requireNonNull(service);
     }
@@ -27,4 +25,3 @@ public class AtendimentoController implements AtendimentoIController {
         return service.processar(atendimento);
     }
 }
-

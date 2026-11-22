@@ -21,7 +21,6 @@ public class PacienteServiceTest {
 
     @BeforeEach
     void preparar() {
-        // Cada teste utiliza um DAO em memória independente.
         service = new PacienteService(new FakePacienteDao());
     }
 
@@ -63,4 +62,3 @@ public class PacienteServiceTest {
         assertTrue(service.findAll().isEmpty());
     }
 }
-

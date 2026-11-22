@@ -21,7 +21,6 @@ public class ExameServiceTest {
 
     @BeforeEach
     void preparar() {
-        // Cada teste utiliza um DAO falso independente.
         service = new ExameService(new FakeExameDao());
     }
 
@@ -72,4 +71,3 @@ public class ExameServiceTest {
         assertTrue(service.findAll().isEmpty());
     }
 }
-

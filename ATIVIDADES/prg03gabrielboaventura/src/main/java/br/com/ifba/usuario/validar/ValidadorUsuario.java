@@ -8,11 +8,13 @@ package br.com.ifba.usuario.validar;
  *
  * @author gabri
  */
-
 public class ValidadorUsuario {
 
-    // Verifica se todos os campos foram preenchidos
-    public static boolean camposPreenchidos(String nome, String email,
+    private static final String[] PALAVRAS_PROIBIDAS_PADRAO = {
+        "admin", "teste", "root", "senha123"
+    };
+
+    public static boolean todosOsCamposPreenchidos(String nome, String email,
             String senha, String confirmarSenha) {
 
         return nome != null && !nome.isEmpty()
@@ -21,34 +23,33 @@ public class ValidadorUsuario {
                 && confirmarSenha != null && !confirmarSenha.isEmpty();
     }
 
-    // Verifica se as senhas são iguais
     public static boolean senhasCoincidem(String senha, String confirmarSenha) {
         return senha != null && senha.equals(confirmarSenha);
     }
-    
-    // Verifica se a senha possui no mínimo 8 caracteres
-    public static boolean senhaForte(String senha) {
+
+    public static boolean senhaPossuiTamanhoMinimo(String senha) {
         return senha != null && senha.length() >= 8;
     }
-    
-    // Verifica se o texto contém alguma palavra proibida
+
     public static boolean contemPalavraProibida(String texto) {
-        
+        return contemPalavraProibida(texto, PALAVRAS_PROIBIDAS_PADRAO);
+    }
+
+    public static boolean contemPalavraProibida(String texto,
+            String[] palavrasProibidas) {
+
         if (texto == null) {
             return false;
         }
 
-        // Palavras que não são permitidas
-        String[] palavrasProibidas = {"admin", "teste", "root", "senha123"};
+        java.util.Objects.requireNonNull(palavrasProibidas);
 
-        // Percorre todas as palavras proibidas
         for (String palavra : palavrasProibidas) {
             if (texto.contains(palavra)) {
                 return true;
             }
         }
 
-        // Nenhuma palavra proibida foi encontrada
         return false;
     }
 }

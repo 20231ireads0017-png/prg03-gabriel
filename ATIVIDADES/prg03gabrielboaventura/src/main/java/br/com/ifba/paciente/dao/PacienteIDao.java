@@ -4,14 +4,13 @@
  */
 package br.com.ifba.paciente.dao;
 
+import br.com.ifba.paciente.entity.Paciente;
+import java.util.List;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.paciente.entity.Paciente;
-import java.util.List;
-
 public interface PacienteIDao {
 
     Paciente save(Paciente paciente);
@@ -24,4 +23,3 @@ public interface PacienteIDao {
 
     List<Paciente> findAll();
 }
-

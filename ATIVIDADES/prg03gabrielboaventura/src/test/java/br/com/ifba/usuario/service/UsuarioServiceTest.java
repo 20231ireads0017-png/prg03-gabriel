@@ -21,7 +21,6 @@ public class UsuarioServiceTest {
 
     @BeforeEach
     void preparar() {
-        // Usa o DAO em memória, sem acessar o MySQL.
         service = new UsuarioService(new FakeUsuarioDao());
     }
 
