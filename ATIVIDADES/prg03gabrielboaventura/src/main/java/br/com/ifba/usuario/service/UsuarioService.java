@@ -9,11 +9,13 @@ import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author gabri
  */
+@Service
 public class UsuarioService implements UsuarioIService {
 
     private final UsuarioIDao dao;

@@ -6,11 +6,13 @@ package br.com.ifba.login.view;
 
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author gabri
  */
+@Component
 public class TelaLogin extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLogin.class.getName());
