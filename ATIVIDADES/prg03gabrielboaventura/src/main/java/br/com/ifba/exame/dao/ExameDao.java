@@ -7,11 +7,13 @@ package br.com.ifba.exame.dao;
 import br.com.ifba.exame.entity.Exame;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author gabri
  */
+@Repository
 public class ExameDao implements ExameIDao {
 
     private final List<Exame> exames = new ArrayList<>();

@@ -7,6 +7,8 @@ package br.com.ifba.login.view;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
 import org.springframework.stereotype.Component;
+import br.com.ifba.usuario.view.TelaCadastroUsuario;
+import org.springframework.beans.factory.ObjectProvider;
 
 /**
  *
@@ -17,12 +19,15 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLogin.class.getName());
     private final UsuarioIController controller;
+    private final ObjectProvider<TelaCadastroUsuario> telaCadastroProvider;
 
     /**
      * Creates new form TelaLogin
      */
-    public TelaLogin(UsuarioIController controller) {
+    public TelaLogin(UsuarioIController controller,
+            ObjectProvider<TelaCadastroUsuario> telaCadastroProvider) {
         this.controller = java.util.Objects.requireNonNull(controller);
+        this.telaCadastroProvider = java.util.Objects.requireNonNull(telaCadastroProvider);
         initComponents();
     }
 
@@ -189,8 +194,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void lblCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastrarMouseClicked
         // TODO add your handling code here:
-        br.com.ifba.usuario.view.TelaCadastroUsuario telaCadastro
-                = new br.com.ifba.usuario.view.TelaCadastroUsuario(controller);
+        TelaCadastroUsuario telaCadastro = telaCadastroProvider.getObject();
         telaCadastro.setVisible(true);
     }//GEN-LAST:event_lblCadastrarMouseClicked
 

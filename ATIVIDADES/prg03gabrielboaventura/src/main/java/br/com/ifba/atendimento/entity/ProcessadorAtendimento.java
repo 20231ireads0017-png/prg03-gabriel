@@ -4,10 +4,13 @@
  */
 package br.com.ifba.atendimento.entity;
 
+import org.springframework.stereotype.Component;
+
 /**
  *
  * @author gabri
  */
+@Component
 public class ProcessadorAtendimento {
 
     public String processar(Atendimento atendimento) {

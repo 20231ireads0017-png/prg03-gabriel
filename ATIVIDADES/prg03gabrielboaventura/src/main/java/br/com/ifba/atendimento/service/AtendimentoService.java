@@ -7,11 +7,13 @@ package br.com.ifba.atendimento.service;
 import br.com.ifba.atendimento.entity.Atendimento;
 import br.com.ifba.atendimento.entity.ProcessadorAtendimento;
 import java.util.Objects;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author gabri
  */
+@Service
 public class AtendimentoService implements AtendimentoIService {
 
     private final ProcessadorAtendimento processador;

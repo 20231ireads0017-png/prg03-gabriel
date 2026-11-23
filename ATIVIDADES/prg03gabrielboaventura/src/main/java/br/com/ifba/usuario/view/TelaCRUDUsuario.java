@@ -4,17 +4,21 @@
  */
 package br.com.ifba.usuario.view;
 
-/**
- *
- * @author gabri
- */
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import br.com.ifba.usuario.exception.UsuarioNaoEncontradoException;
+import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
 
+/**
+ *
+ * @author gabri
+ */
+@Component
+@Scope("prototype")
 public class TelaCRUDUsuario extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCRUDUsuario.class.getName());

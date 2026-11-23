@@ -7,11 +7,13 @@ package br.com.ifba.atendimento.controller;
 import br.com.ifba.atendimento.entity.Atendimento;
 import br.com.ifba.atendimento.service.AtendimentoIService;
 import java.util.Objects;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author gabri
  */
+@Controller
 public class AtendimentoController implements AtendimentoIController {
 
     private final AtendimentoIService service;

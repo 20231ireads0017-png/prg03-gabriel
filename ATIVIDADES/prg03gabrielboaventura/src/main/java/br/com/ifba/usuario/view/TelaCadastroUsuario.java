@@ -5,11 +5,15 @@
 package br.com.ifba.usuario.view;
 
 import br.com.ifba.usuario.controller.UsuarioIController;
+import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
 
 /**
  *
  * @author gabri
  */
+@Component
+@Scope("prototype")
 public class TelaCadastroUsuario extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
