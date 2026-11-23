@@ -8,11 +8,13 @@ import br.com.ifba.paciente.dao.PacienteIDao;
 import br.com.ifba.paciente.entity.Paciente;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author gabri
  */
+@Service
 public class PacienteService implements PacienteIService {
 
     private final PacienteIDao dao;

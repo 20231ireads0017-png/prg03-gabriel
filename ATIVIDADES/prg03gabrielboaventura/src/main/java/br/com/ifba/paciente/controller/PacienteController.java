@@ -8,11 +8,13 @@ import br.com.ifba.paciente.entity.Paciente;
 import br.com.ifba.paciente.service.PacienteIService;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author gabri
  */
+@Controller
 public class PacienteController implements PacienteIController {
 
     private final PacienteIService service;

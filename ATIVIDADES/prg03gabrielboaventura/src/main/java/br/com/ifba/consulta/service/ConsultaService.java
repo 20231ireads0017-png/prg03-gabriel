@@ -8,11 +8,13 @@ import br.com.ifba.consulta.dao.ConsultaIDao;
 import br.com.ifba.consulta.entity.Consulta;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author gabri
  */
+@Service
 public class ConsultaService implements ConsultaIService {
 
     private final ConsultaIDao dao;

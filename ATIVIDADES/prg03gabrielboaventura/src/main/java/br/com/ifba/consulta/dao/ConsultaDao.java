@@ -7,11 +7,13 @@ package br.com.ifba.consulta.dao;
 import br.com.ifba.consulta.entity.Consulta;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author gabri
  */
+@Repository
 public class ConsultaDao implements ConsultaIDao {
 
     private final List<Consulta> consultas = new ArrayList<>();

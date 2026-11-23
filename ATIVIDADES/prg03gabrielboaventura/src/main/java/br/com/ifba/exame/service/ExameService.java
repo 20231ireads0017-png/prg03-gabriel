@@ -8,11 +8,13 @@ import br.com.ifba.exame.dao.ExameIDao;
 import br.com.ifba.exame.entity.Exame;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author gabri
  */
+@Service
 public class ExameService implements ExameIService {
 
     private final ExameIDao dao;

@@ -8,11 +8,13 @@ import br.com.ifba.paciente.entity.Paciente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author gabri
  */
+@Repository
 public class PacienteDao implements PacienteIDao {
 
     private final List<Paciente> pacientes = new ArrayList<>();

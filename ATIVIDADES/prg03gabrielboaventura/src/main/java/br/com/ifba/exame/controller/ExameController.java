@@ -8,11 +8,13 @@ import br.com.ifba.exame.entity.Exame;
 import br.com.ifba.exame.service.ExameIService;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author gabri
  */
+@Controller
 public class ExameController implements ExameIController {
 
     private final ExameIService service;

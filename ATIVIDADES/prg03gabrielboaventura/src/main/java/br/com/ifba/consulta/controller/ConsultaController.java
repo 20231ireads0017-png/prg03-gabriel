@@ -8,11 +8,13 @@ import br.com.ifba.consulta.entity.Consulta;
 import br.com.ifba.consulta.service.ConsultaIService;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author gabri
  */
+@Controller
 public class ConsultaController implements ConsultaIController {
 
     private final ConsultaIService service;
