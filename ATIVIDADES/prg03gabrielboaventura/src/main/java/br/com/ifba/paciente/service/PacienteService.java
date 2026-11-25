@@ -27,7 +27,8 @@ public class PacienteService implements PacienteIService {
     public Paciente save(Paciente paciente) {
         validarPaciente(paciente);
 
-        if (dao.findByCartaoSus(paciente.getCartaoSus()) != null) {
+        // Impede o cadastro de cartões SUS duplicados.
+        if (dao.existsByCartaoSus(paciente.getCartaoSus())) {
             throw new IllegalArgumentException(
                     "Já existe um paciente com este cartão SUS.");
         }
@@ -39,12 +40,17 @@ public class PacienteService implements PacienteIService {
     public Paciente update(Paciente paciente) {
         validarPaciente(paciente);
 
-        if (dao.findByCartaoSus(paciente.getCartaoSus()) == null) {
+        Paciente existente
+                = dao.findByCartaoSus(paciente.getCartaoSus());
+
+        if (existente == null) {
             throw new IllegalArgumentException(
                     "Paciente não encontrado.");
         }
 
-        return dao.update(paciente);
+        paciente.setId(existente.getId());
+
+        return dao.save(paciente);
     }
 
     @Override
@@ -54,12 +60,15 @@ public class PacienteService implements PacienteIService {
                     "Paciente inválido.");
         }
 
-        if (dao.findByCartaoSus(paciente.getCartaoSus()) == null) {
+        Paciente existente
+                = dao.findByCartaoSus(paciente.getCartaoSus());
+
+        if (existente == null) {
             throw new IllegalArgumentException(
                     "Paciente não encontrado.");
         }
 
-        dao.delete(paciente);
+        dao.delete(existente);
     }
 
     @Override

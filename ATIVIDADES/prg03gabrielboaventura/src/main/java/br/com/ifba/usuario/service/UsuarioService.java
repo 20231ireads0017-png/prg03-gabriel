@@ -27,13 +27,19 @@ public class UsuarioService implements UsuarioIService {
     @Override
     public Usuario save(Usuario usuario) {
         validarUsuario(usuario);
+
+        if (dao.existsByEmail(usuario.getEmail())) {
+            throw new IllegalArgumentException(
+                    "Já existe um usuário com este e-mail.");
+        }
+
         return dao.save(usuario);
     }
 
     @Override
     public Usuario update(Usuario usuario) {
         validarUsuario(usuario);
-        return dao.update(usuario);
+        return dao.save(usuario);
     }
 
     @Override
@@ -43,7 +49,7 @@ public class UsuarioService implements UsuarioIService {
 
     @Override
     public Usuario findById(Long id) {
-        return dao.findById(id);
+        return dao.findById(id).orElse(null);
     }
 
     @Override

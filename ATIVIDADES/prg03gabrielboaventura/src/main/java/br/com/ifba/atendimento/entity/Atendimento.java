@@ -4,14 +4,21 @@
  */
 package br.com.ifba.atendimento.entity;
 
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import jakarta.persistence.MappedSuperclass;
+
 /**
  *
  * @author gabri
  */
-public abstract class Atendimento {
+@MappedSuperclass
+public abstract class Atendimento extends PersistenceEntity {
 
     private String especialidade;
     private String data;
+
+    protected Atendimento() {
+    }
 
     public Atendimento(String especialidade, String data) {
         this.especialidade = especialidade;

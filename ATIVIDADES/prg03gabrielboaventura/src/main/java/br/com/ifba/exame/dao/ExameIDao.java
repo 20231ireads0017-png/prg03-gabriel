@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface ExameIDao {
 
-    Exame save(Exame exame);
-
-    Exame update(Exame exame);
+    <S extends Exame> S save(S exame);
 
     void delete(Exame exame);
 
     List<Exame> findAll();
+
+    boolean existsById(Long id);
 }

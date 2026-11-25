@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package br.com.ifba.paciente.dao;
 
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public interface PacienteIDao {
 
-    Paciente save(Paciente paciente);
-
-    Paciente update(Paciente paciente);
+    <S extends Paciente> S save(S paciente);
 
     void delete(Paciente paciente);
 
     Paciente findByCartaoSus(String cartaoSus);
+
+    boolean existsByCartaoSus(String cartaoSus);
 
     List<Paciente> findAll();
 }

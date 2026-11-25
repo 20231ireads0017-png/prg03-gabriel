@@ -5,18 +5,30 @@
 package br.com.ifba.consulta.entity;
 
 import br.com.ifba.atendimento.entity.Atendimento;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 /**
  *
  * @author gabri
  */
+@Entity
+@Table(name = "consultas")
 public class Consulta extends Atendimento {
 
-    private StatusConsulta status;
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private StatusConsulta status = StatusConsulta.AGENDADA;
+
+    protected Consulta() {
+    }
 
     public Consulta(String especialidade, String data) {
         super(especialidade, data);
-        this.status = StatusConsulta.AGENDADA;
     }
 
     public StatusConsulta getStatus() {

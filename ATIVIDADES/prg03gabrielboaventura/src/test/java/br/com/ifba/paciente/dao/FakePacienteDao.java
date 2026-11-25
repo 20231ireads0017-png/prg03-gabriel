@@ -4,43 +4,42 @@
  */
 package br.com.ifba.paciente.dao;
 
-/**
- *
- * @author gabri
- */
-
 import br.com.ifba.paciente.entity.Paciente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author gabri
+ */
 public class FakePacienteDao implements PacienteIDao {
 
     private final List<Paciente> pacientes = new ArrayList<>();
+    private long proximoId = 1;
 
     @Override
-    public Paciente save(Paciente paciente) {
-        pacientes.add(paciente);
-        return paciente;
-    }
+    public <S extends Paciente> S save(S paciente) {
+        if (paciente.getId() == null) {
+            paciente.setId(proximoId++);
+        }
 
-    @Override
-    public Paciente update(Paciente paciente) {
         for (int i = 0; i < pacientes.size(); i++) {
-            if (Objects.equals(pacientes.get(i).getCartaoSus(),
-                    paciente.getCartaoSus())) {
+            if (Objects.equals(pacientes.get(i).getId(),
+                    paciente.getId())) {
                 pacientes.set(i, paciente);
                 return paciente;
             }
         }
 
-        throw new IllegalArgumentException("Paciente não encontrado.");
+        pacientes.add(paciente);
+        return paciente;
     }
 
     @Override
     public void delete(Paciente paciente) {
-        pacientes.removeIf(p ->
-                Objects.equals(p.getCartaoSus(), paciente.getCartaoSus()));
+        pacientes.removeIf(p
+                -> Objects.equals(p.getId(), paciente.getId()));
     }
 
     @Override
@@ -57,5 +56,12 @@ public class FakePacienteDao implements PacienteIDao {
     @Override
     public List<Paciente> findAll() {
         return new ArrayList<>(pacientes);
+    }
+
+    @Override
+    public boolean existsByCartaoSus(String cartaoSus) {
+        return pacientes.stream()
+                .anyMatch(p -> Objects.equals(
+                p.getCartaoSus(), cartaoSus));
     }
 }

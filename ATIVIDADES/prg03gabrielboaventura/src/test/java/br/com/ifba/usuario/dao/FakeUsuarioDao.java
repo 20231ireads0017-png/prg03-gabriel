@@ -4,51 +4,56 @@
  */
 package br.com.ifba.usuario.dao;
 
+import br.com.ifba.usuario.entity.Usuario;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  *
  * @author gabri
  */
-
-import br.com.ifba.usuario.entity.Usuario;
-import java.util.ArrayList;
-import java.util.List;
-
 public class FakeUsuarioDao implements UsuarioIDao {
 
     private final List<Usuario> usuarios = new ArrayList<>();
     private long proximoId = 1;
 
     @Override
-    public Usuario save(Usuario usuario) {
-        usuario.setId(proximoId++);
+    public <S extends Usuario> S save(S usuario) {
+        if (usuario.getId() == null) {
+            usuario.setId(proximoId++);
+        }
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (Objects.equals(usuarios.get(i).getId(),
+                    usuario.getId())) {
+                usuarios.set(i, usuario);
+                return usuario;
+            }
+        }
+
         usuarios.add(usuario);
         return usuario;
     }
 
     @Override
-    public Usuario update(Usuario usuario) {
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getId().equals(usuario.getId())) {
-                usuarios.set(i, usuario);
-                return usuario;
-            }
-        }
-        throw new IllegalArgumentException("Usuário não encontrado.");
-    }
-
-    @Override
     public void delete(Usuario usuario) {
-        usuarios.removeIf(u -> u.getId().equals(usuario.getId()));
+        usuarios.removeIf(u ->
+                Objects.equals(u.getId(), usuario.getId()));
     }
 
     @Override
-    public Usuario findById(Long id) {
+    public Optional<Usuario> findById(Long id) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getId().equals(id)) {
-                return usuario;
+            if (Objects.equals(usuario.getId(), id)) {
+                return Optional.of(usuario);
             }
         }
-        return null;
+
+        return Optional.empty();
     }
 
     @Override
@@ -59,23 +64,34 @@ public class FakeUsuarioDao implements UsuarioIDao {
     @Override
     public Usuario findByEmail(String email) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getEmail().equals(email)) {
+            if (Objects.equals(usuario.getEmail(), email)) {
                 return usuario;
             }
         }
+
         return null;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return usuarios.stream()
+                .anyMatch(u -> Objects.equals(u.getEmail(), email));
     }
 
     @Override
     public List<Usuario> pesquisar(String texto) {
         List<Usuario> resultado = new ArrayList<>();
+        String termo = texto.toLowerCase(Locale.ROOT);
 
         for (Usuario usuario : usuarios) {
-            if (usuario.getNome().contains(texto)
-                    || usuario.getEmail().contains(texto)) {
+            if (usuario.getNome().toLowerCase(Locale.ROOT).contains(termo)
+                    || usuario.getEmail().toLowerCase(Locale.ROOT).contains(termo)) {
                 resultado.add(usuario);
             }
         }
+
+        resultado.sort(Comparator.comparing(
+                Usuario::getNome, String.CASE_INSENSITIVE_ORDER));
 
         return resultado;
     }
