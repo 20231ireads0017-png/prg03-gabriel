@@ -5,6 +5,13 @@
 package br.com.ifba.paciente.entity;
 
 import br.com.ifba.consulta.entity.Consulta;
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,16 +19,25 @@ import java.util.List;
  *
  * @author gabri
  */
-public class Paciente {
+@Entity
+@Table(name = "pacientes")
+public class Paciente extends PersistenceEntity {
 
     private String nome;
+
+    @Column(name = "cartao_sus", unique = true)
     private String cartaoSus;
-    private List<Consulta> consultas;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "paciente_id")
+    private List<Consulta> consultas = new ArrayList<>();
+
+    protected Paciente() {
+    }
 
     public Paciente(String nome, String cartaoSus) {
         this.nome = nome;
         this.cartaoSus = cartaoSus;
-        this.consultas = new ArrayList<>();
     }
 
     public void adicionarConsulta(Consulta consulta) {

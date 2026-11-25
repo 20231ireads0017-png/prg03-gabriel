@@ -33,12 +33,12 @@ public class ExameService implements ExameIService {
     public Exame update(Exame exame) {
         validarExame(exame);
 
-        if (!dao.findAll().contains(exame)) {
+        if (!existeExame(exame)) {
             throw new IllegalArgumentException(
                     "Exame não encontrado.");
         }
 
-        return dao.update(exame);
+        return dao.save(exame);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ExameService implements ExameIService {
                     "Exame não pode ser nulo.");
         }
 
-        if (!dao.findAll().contains(exame)) {
+        if (!existeExame(exame)) {
             throw new IllegalArgumentException(
                     "Exame não encontrado.");
         }
@@ -59,6 +59,11 @@ public class ExameService implements ExameIService {
     @Override
     public List<Exame> findAll() {
         return dao.findAll();
+    }
+
+    private boolean existeExame(Exame exame) {
+        return exame.getId() != null
+                && dao.existsById(exame.getId());
     }
 
     private void validarExame(Exame exame) {

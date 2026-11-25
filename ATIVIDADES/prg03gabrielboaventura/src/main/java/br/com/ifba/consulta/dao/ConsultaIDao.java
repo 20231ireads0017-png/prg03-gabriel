@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface ConsultaIDao {
 
-    Consulta save(Consulta consulta);
-
-    Consulta update(Consulta consulta);
+    <S extends Consulta> S save(S consulta);
 
     void delete(Consulta consulta);
 
     List<Consulta> findAll();
+
+    boolean existsById(Long id);
 }

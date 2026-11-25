@@ -33,12 +33,12 @@ public class ConsultaService implements ConsultaIService {
     public Consulta update(Consulta consulta) {
         validarConsulta(consulta);
 
-        if (!dao.findAll().contains(consulta)) {
+        if (!existeConsulta(consulta)) {
             throw new IllegalArgumentException(
                     "Consulta não encontrada.");
         }
 
-        return dao.update(consulta);
+        return dao.save(consulta);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ConsultaService implements ConsultaIService {
                     "Consulta não pode ser nula.");
         }
 
-        if (!dao.findAll().contains(consulta)) {
+        if (!existeConsulta(consulta)) {
             throw new IllegalArgumentException(
                     "Consulta não encontrada.");
         }
@@ -59,6 +59,11 @@ public class ConsultaService implements ConsultaIService {
     @Override
     public List<Consulta> findAll() {
         return dao.findAll();
+    }
+
+    private boolean existeConsulta(Consulta consulta) {
+        return consulta.getId() != null
+                && dao.existsById(consulta.getId());
     }
 
     private void validarConsulta(Consulta consulta) {
